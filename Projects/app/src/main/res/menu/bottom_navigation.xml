@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_route"
+        android:icon="@drawable/ic_route_icon"
+        android:title="@string/route" />
+    <item
+        android:id="@+id/menu_exercise"
+        android:icon="@drawable/ic_directions_bike_black_24dp"
+        android:title="@string/exercise" />
+
+    <item
+        android:id="@+id/menu_racks"
+        android:icon="@drawable/ic_rack"
+        android:title="@string/racks" />
+    <item
+        android:id="@+id/menu_me"
+        android:icon="@drawable/ic_account_box_black_24dp"
+        android:title="@string/me" />
+
+
+
+</menu>
