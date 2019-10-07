@@ -17,4 +17,33 @@
     <string name="your_profile">Your profile</string>
     <string name="your_cycling_history">Your cycling history</string>
     <string name="launchscreen">launchscreen</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile_fragment">Profile fragment</string>
+    <string name="title_activity_profile">profileActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="startexercise">startexercise</string>
+    <string name="stopexercise">stopexercise</string>
+    <string name="textview">TextView</string>
+    <string name="distance">Distance:</string>
+    <string name="duration">Duration:</string>
+    <string name="speed">Speed:</string>
+    <string name="average_speed">Average Speed</string>
+    <string name="profilepicture">profilepicture</string>
+    <string name="hi_username">Hi! Username</string>
+    <string name="toparrow">toparrow</string>
+    <string name="mylocation">mylocation</string>
+    <string name="_4_61km">4.61KM</string>
+    <string name="_00_30_22">00:30:22</string>
+    <string name="_8_43_km_h">8.43 KM/H</string>
+    <string name="searchtitle">searchtitle</string>
+    <string name="find_rack_button">find rack Button</string>
+    <string name="find">FIND</string>
+    <string name="searchicon">searchicon</string>
+    <string name="where_to_park">where to park</string>
+    <string name="hinttext">hinttext</string>
+    <string name="searchhint">where to park?</string>
+
 </resources>
