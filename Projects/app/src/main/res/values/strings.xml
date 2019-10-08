@@ -44,6 +44,9 @@
     <string name="searchicon">searchicon</string>
     <string name="where_to_park">where to park</string>
     <string name="hinttext">hinttext</string>
-    <string name="searchhint">where to park?</string>
+    <string name="searchhint">undefined</string>
+    <string name="racks_searchhint">Where to park?</string>
+    <string name="topsearchhint">Choose starting point</string>
+    <string name="botsearchhint">Choose destination</string>
 
 </resources>

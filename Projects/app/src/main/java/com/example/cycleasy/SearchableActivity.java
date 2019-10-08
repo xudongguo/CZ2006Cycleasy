@@ -1,20 +1,24 @@
 package com.example.cycleasy;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -23,11 +27,31 @@ import java.util.ArrayList;
 public class SearchableActivity extends AppCompatActivity {
     ArrayList<String> list = new ArrayList<>();
     ArrayAdapter adapter;
+    String myQuery;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchlayout);
         SearchView searchView=findViewById(R.id.searchview);
+        //set different queryhint texts for searches in different fragments
+        Intent thisIntent=getIntent();
+        String sender=thisIntent.getExtras().getString("Sender");
+        switch (sender){
+            case "RacksSearchBar":
+                searchView.setQueryHint("Where to park?");
+                break;
+            case "topRouteSearchbar":
+                searchView.setQueryHint("Starting point?");
+                break;
+            case "botRouteSearchbar":
+                searchView.setQueryHint("Destination?");
+                break;
+        }
+        //force keyboard to popup automatically
+        searchView.setIconified(false);
+        ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).
+                toggleSoftInput(InputMethodManager.SHOW_FORCED,
+                        InputMethodManager.HIDE_IMPLICIT_ONLY);
 
         //RECEIVING QUERY
         //Listener for users' actions in the searchView
@@ -35,6 +59,7 @@ public class SearchableActivity extends AppCompatActivity {
             @Override
             //TODO when query is submitted
             public boolean onQueryTextSubmit(String query) {
+
                 Toast toast=Toast.makeText(getApplicationContext(),"query submitted",Toast.LENGTH_SHORT);
                 toast.show();
                 SearchRecentSuggestions suggestions = new SearchRecentSuggestions(getBaseContext(),
@@ -42,8 +67,8 @@ public class SearchableActivity extends AppCompatActivity {
                 suggestions.saveRecentQuery(query, null);
                 //performing real search viw doMySearch
                 doMySearch(query);
-                //PROCESSING QUERY
-
+                //finish search activity
+                finish();
                 return false;
             }
 
@@ -65,7 +90,7 @@ public class SearchableActivity extends AppCompatActivity {
 
         //.}
 
-        //PRESENTING SEARCH RESULT
+        //TODO to Prenting Search result
         ListView listView=findViewById(R.id.listview);
         //list.add()
         //Adapter for search result presentation

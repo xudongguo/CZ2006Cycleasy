@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/launchericon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchableActivity">
+        <activity android:name=".SearchableActivity"
+            android:windowSoftInputMode="stateAlwaysVisible">
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>

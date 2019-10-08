@@ -39,9 +39,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@null"
+            android:queryHint="@string/searchhint"
             android:clickable="true"
             android:iconifiedByDefault="false"
-            android:queryHint="where to park?"
             android:focusable="true">
 
         </SearchView>

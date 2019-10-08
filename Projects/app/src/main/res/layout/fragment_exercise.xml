@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -119,8 +120,8 @@
                     android:id="@+id/timenumber"
                     android:layout_width="92dp"
                     android:layout_height="35dp"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginLeft="28dp"
+                    android:layout_marginStart="23dp"
+                    android:layout_marginLeft="23dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="53dp"
                     android:layout_marginRight="53dp"
@@ -175,78 +176,74 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/mylocationbutton"
-                android:layout_width="88dp"
-                android:layout_height="117dp"
-                android:layout_marginStart="270dp"
-                android:layout_marginLeft="270dp"
-                android:layout_marginTop="350dp"
-                android:layout_marginEnd="6dp"
-                android:layout_marginRight="6dp"
-                android:layout_marginBottom="217dp"
-                android:background="#00FFFCFC"
-                android:contentDescription="@string/mylocation"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.042"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/iconmylocation" />
-
-            <ImageButton
-                android:id="@+id/startbutton"
-                style="@style/Widget.AppCompat.ImageButton"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="360dp"
-                android:layout_marginEnd="60dp"
-                android:layout_marginRight="60dp"
-                android:layout_marginBottom="28dp"
-                android:background="@drawable/buttonborder"
-                android:baselineAlignBottom="false"
-                android:contentDescription="@string/startexercise"
-                android:elevation="10dp"
-                android:fadingEdge="horizontal|vertical"
-                android:tint="@color/colorPrimaryDark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.128"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.742"
-                app:srcCompat="@drawable/button_startexercise" />
-
-            <ImageButton
-                android:id="@+id/stopbutton"
-                android:layout_width="59dp"
-                android:layout_height="63dp"
-                android:layout_marginStart="80dp"
-                android:layout_marginLeft="80dp"
-                android:layout_marginTop="360dp"
-                android:layout_marginEnd="60dp"
-                android:layout_marginRight="60dp"
-                android:layout_marginBottom="28dp"
-                android:background="@drawable/buttonborder"
-                android:contentDescription="@string/stopexercise"
-                android:elevation="10dp"
-                android:fadingEdge="horizontal|vertical"
-                android:tint="@color/colorPrimaryDark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.18"
-                app:layout_constraintStart_toEndOf="@+id/startbutton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.754"
-                app:srcCompat="@drawable/button_stopexercise" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_anchor="@+id/nestedScrollView"
+        app:layout_anchorGravity="center">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/exe_startBut"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="360dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginBottom="28dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foregroundGravity="center"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.754"
+            app:srcCompat="@drawable/startbutton" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/stopbutton"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="360dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginBottom="28dp"
+            android:clickable="true"
+            android:contentDescription="@string/stopexercise"
+            android:focusable="true"
+            android:foregroundGravity="center"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.18"
+            app:layout_constraintStart_toEndOf="@+id/exe_startBut"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.754"
+            app:srcCompat="@drawable/stopbutton2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/exe_loactionBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="430dp"
+        android:layout_marginLeft="290dp"
+        android:layout_marginStart="290dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/iconmylocation"
+        tools:layout_editor_absoluteX="301dp"
+        tools:layout_editor_absoluteY="514dp"
+        android:focusable="true" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
