@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class RouteFragment extends Fragment {
@@ -45,6 +48,17 @@ public class RouteFragment extends Fragment {
             }
         });
 
+        FloatingActionButton favBut=(FloatingActionButton)view.findViewById(R.id.route_favBut);
+
+        favBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            //TODO when favorite button is clicked
+            public void onClick(View view) {
+                Toast myToast=Toast.makeText(getContext(),"Added to favorite", Toast.LENGTH_LONG );
+                myToast.show();
+
+            }
+        });
         return view;
 
     }
