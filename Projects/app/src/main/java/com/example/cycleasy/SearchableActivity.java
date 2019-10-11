@@ -27,14 +27,15 @@ import java.util.ArrayList;
 public class SearchableActivity extends AppCompatActivity {
     ArrayList<String> list = new ArrayList<>();
     ArrayAdapter adapter;
-    String myQuery;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchlayout);
         SearchView searchView=findViewById(R.id.searchview);
+
         //set different queryhint texts for searches in different fragments
-        Intent thisIntent=getIntent();
+        final Intent thisIntent=getIntent();
         String sender=thisIntent.getExtras().getString("Sender");
         switch (sender){
             case "RacksSearchBar":
@@ -57,16 +58,19 @@ public class SearchableActivity extends AppCompatActivity {
         //Listener for users' actions in the searchView
        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            //TODO when query is submitted
+            //when query is submitted
             public boolean onQueryTextSubmit(String query) {
-
                 Toast toast=Toast.makeText(getApplicationContext(),"query submitted",Toast.LENGTH_SHORT);
                 toast.show();
+                //TODO for search suggestions, currently not working...
                 SearchRecentSuggestions suggestions = new SearchRecentSuggestions(getBaseContext(),
                         SearchSuggestionsProvider.AUTHORITY, SearchSuggestionsProvider.MODE);
                 suggestions.saveRecentQuery(query, null);
-                //performing real search viw doMySearch
+                //for performing real search in database or via API by doMySearch
                 doMySearch(query);
+                //pass query data back to fragment for display
+                thisIntent.putExtra("query",query);
+                setResult(RESULT_OK,thisIntent);
                 //finish search activity
                 finish();
                 return false;
@@ -90,7 +94,7 @@ public class SearchableActivity extends AppCompatActivity {
 
         //.}
 
-        //TODO to Prenting Search result
+        //TODO for presenting search result
         ListView listView=findViewById(R.id.listview);
         //list.add()
         //Adapter for search result presentation

@@ -159,7 +159,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foregroundGravity="center"
-        app:srcCompat="@drawable/icon_fav"
+        app:srcCompat="@drawable/icon_favempty"
         tools:layout_editor_absoluteX="301dp"
         tools:layout_editor_absoluteY="514dp"
          />
