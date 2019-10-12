@@ -117,7 +117,7 @@
                 android:layout_height="25dp"
                 android:layout_marginRight="5dp"
                 android:textOff=""
-                android:background="@drawable/icon_fav"/>
+                android:background="@drawable/icon_favfilled"/>
 
 
         </LinearLayout>
