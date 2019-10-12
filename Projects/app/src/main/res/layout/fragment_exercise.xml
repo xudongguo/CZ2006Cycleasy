@@ -209,7 +209,7 @@
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/stopbutton"
+            android:id="@+id/exe_stopBut"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="80dp"

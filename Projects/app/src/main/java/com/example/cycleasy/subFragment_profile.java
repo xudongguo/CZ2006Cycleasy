@@ -17,10 +17,13 @@ import android.widget.TextView;
 
 public class subFragment_profile extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.subfragment_profile, null);
+        View view=inflater.inflate(R.layout.subfragment_profile, null);
         //.onBackPressed();
 
     //return view;}
 
+
+
+    return  view;
 
     }}

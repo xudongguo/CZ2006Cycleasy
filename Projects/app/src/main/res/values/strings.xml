@@ -48,5 +48,12 @@
     <string name="racks_searchhint">Where to park?</string>
     <string name="topsearchhint">Choose starting point</string>
     <string name="botsearchhint">Choose destination</string>
+    <string name="racklocation">racklocation</string>
+    <string name="exe_reptitle">YOUR EXERCISE REPORT</string>
+    <string name="exe_disttext">Distance Cycled</string>
+    <string name="exe_durationcycled">Duration Cycled</string>
+    <string name="exe_avespeed">Average Speed</string>
+    <string name="exe_notification"> Your exercise is saved in <u>cycling history</u>.</string>
+    <string name="gobackbuttondescription">gobackbutton</string>
 
 </resources>

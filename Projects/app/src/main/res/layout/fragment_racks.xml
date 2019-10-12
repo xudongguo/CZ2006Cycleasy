@@ -105,4 +105,18 @@
         tools:layout_editor_absoluteY="514dp"
         android:focusable="true" />
 
+
+    <ImageView
+        android:id="@+id/racks_racklocation"
+        android:layout_marginTop="350dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginStart="150dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="@string/racklocation"
+        android:clickable="true"
+        android:focusable="true"
+        app:srcCompat="@drawable/icon_racklocation" />
+
+
 </FrameLayout>
