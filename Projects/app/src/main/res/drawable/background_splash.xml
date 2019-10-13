@@ -5,7 +5,7 @@
         android:right="60dp">
 
         <bitmap
-        android:src="@drawable/appiconf"
+        android:src="@drawable/splashpage"
         android:gravity="center" />
 
     </item>
