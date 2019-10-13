@@ -6,10 +6,13 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/frag_route"
+        android:id="@+id/frag_cychistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/this_is_the_route_page"
+        android:layout_marginEnd="190dp"
+        android:layout_marginRight="190dp"
+        android:layout_marginBottom="702dp"
+        android:text="@string/this_is_the_cycling_history_page"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

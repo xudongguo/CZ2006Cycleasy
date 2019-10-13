@@ -4,20 +4,20 @@
 
     <item
         android:id="@+id/menu_route"
-        android:icon="@drawable/iconroute"
+        android:icon="@drawable/ic_route_icon"
         android:title="@string/route" />
     <item
         android:id="@+id/menu_exercise"
-        android:icon="@drawable/iconexercise"
+        android:icon="@drawable/ic_directions_bike_black_24dp"
         android:title="@string/exercise" />
 
     <item
         android:id="@+id/menu_racks"
-        android:icon="@drawable/iconrack"
+        android:icon="@drawable/ic_rack"
         android:title="@string/racks" />
     <item
         android:id="@+id/menu_me"
-        android:icon="@drawable/iconme"
+        android:icon="@drawable/ic_account_box_black_24dp"
         android:title="@string/me" />
 
 
