@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity"
-    android:background="#FFFFFF">
+    tools:context=".SplashActivity">
 
 <!--    <ImageView-->
 <!--        android:id="@+id/launchscreen"-->
@@ -19,5 +18,4 @@
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toTopOf="parent"-->
 <!--        app:srcCompat="@drawable/appicon" />-->
-
 </androidx.constraintlayout.widget.ConstraintLayout>
