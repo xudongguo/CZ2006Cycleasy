@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "339230410853",
+    "firebase_url": "https://cycleasy-1569520489071.firebaseio.com",
+    "project_id": "cycleasy-1569520489071",
+    "storage_bucket": "cycleasy-1569520489071.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339230410853:android:09754f309985cbc8c7de8c",
+        "android_client_info": {
+          "package_name": "com.example.cycleasy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339230410853-3ha4dc8lu8qfgq7rs6upjp6bh7ih04hr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cycleasy",
+            "certificate_hash": "a23c5c2fd5d50c040cf9e4bdafbc81fca0d984e9"
+          }
+        },
+        {
+          "client_id": "339230410853-i17d7f1gotce86gh7l782e5pijkt77rq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnOeC9xL2k5iuSaheLWe8YDhU0x6jy6V8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339230410853-i17d7f1gotce86gh7l782e5pijkt77rq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
