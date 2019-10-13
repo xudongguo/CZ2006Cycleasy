@@ -2,10 +2,10 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:left="60dp"
-        android:right="60dp">
+        android:right="60dp" >
 
         <bitmap
-        android:src="@drawable/appiconf"
+        android:src="@drawable/logo"
         android:gravity="center" />
 
     </item>

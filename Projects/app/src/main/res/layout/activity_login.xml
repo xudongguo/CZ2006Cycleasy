@@ -14,12 +14,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="370dp"
+        android:layout_width="377dp"
         android:layout_height="220dp"
-        android:layout_marginTop="4dp"
         android:src="@drawable/appicon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.024"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

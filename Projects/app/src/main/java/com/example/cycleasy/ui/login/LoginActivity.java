@@ -25,7 +25,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cycleasy.MainActivity;
 import com.example.cycleasy.R;
 import com.example.cycleasy.SignupActivity;
 import com.facebook.AccessToken;
@@ -190,14 +189,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
-                Toast mytoast=Toast.makeText(getApplicationContext(),"finished",Toast.LENGTH_LONG);
-                mytoast.show();
-                Intent intent=new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
             }
         });
 

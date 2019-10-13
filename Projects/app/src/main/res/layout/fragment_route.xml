@@ -1,181 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/route_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/route_layoutmap"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <!--com.google.android.gms.maps.MapView
-            android:id="@+id/route_mapview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" /-->
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/route_toplayoutbar"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/route_toptoolbar"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/colorAccent"
-            android:clickable="true"
-            android:focusable="true"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/route_topsearchlayout"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical"
-        android:layout_marginStart="10dp">
-
-
-        <TextView
-            android:id="@+id/route_topsearchhbar"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:contentDescription="@string/hinttext"
-            android:text="@string/topsearchhint"
-            android:textSize="20sp"
-            android:gravity="center_vertical"
-            />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/route_botlayoutbar"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="130dp"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/route_bottoolbar"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/colorAccent"
-            android:clickable="true"
-            android:focusable="true"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/route_botsearchlayout"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="130dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/route_botsearchbar"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:contentDescription="@string/hinttext"
-            android:gravity="center_vertical"
-            android:text="@string/botsearchhint"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-
-    <LinearLayout
-
-        android:id="@+id/route_layoutbutton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/route_findbutton"
-            android:layout_width="83dp"
-            android:layout_height="81dp"
-            android:layout_marginTop="500dp"
-            android:layout_gravity="center"
-            android:background="@drawable/shape_drawable"
-            android:text="@string/find"
-            android:textStyle="bold"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorAccent"
-            android:clickable="true"
-            android:focusable="true"
-            />
-
-
-    </LinearLayout>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/route_shareBut"
+    <TextView
+        android:id="@+id/frag_route"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="290dp"
-        android:layout_marginLeft="290dp"
-        android:layout_marginStart="290dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:srcCompat="@drawable/icon_share"
-        tools:layout_editor_absoluteX="301dp"
-        tools:layout_editor_absoluteY="514dp"
-         />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/route_favBut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="360dp"
-        android:layout_marginLeft="290dp"
-        android:layout_marginStart="290dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foregroundGravity="center"
-        app:srcCompat="@drawable/icon_favempty"
-        tools:layout_editor_absoluteX="301dp"
-        tools:layout_editor_absoluteY="514dp"
-         />
+        android:text="@string/this_is_the_route_page"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/route_mylocationBut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="430dp"
-        android:layout_marginLeft="290dp"
-        android:layout_marginStart="290dp"
-        android:clickable="true"
-        android:focusable="true"
-        tools:layout_editor_absoluteX="301dp"
-        tools:layout_editor_absoluteY="514dp"
-        app:srcCompat="@drawable/iconmylocation"
-        />
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

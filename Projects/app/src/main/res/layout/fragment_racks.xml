@@ -1,122 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/racks_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/racks_layoutmap"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <!--com.google.android.gms.maps.MapView
-            android:id="@+id/racks_mapview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" /-->
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/racks_layoutbar"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/racks_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/colorAccent"
-            android:clickable="true"
-            android:focusable="true"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/racks_searchiconlayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical"
-        android:layout_marginStart="10dp">
-
-
-        <TextView
-            android:id="@+id/racks_searchbar"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:contentDescription="@string/hinttext"
-            android:drawableStart="@drawable/searchicon"
-            android:drawableLeft="@drawable/searchicon"
-            android:drawablePadding="10dp"
-            android:text="@string/racks_searchhint"
-            android:textSize="20sp"
-            android:gravity="center_vertical"
-            />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-
-        android:id="@+id/racks_layoutbutton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/findbutton"
-            android:layout_width="83dp"
-            android:layout_height="81dp"
-            android:layout_marginTop="500dp"
-            android:background="@drawable/shape_drawable"
-            android:text="@string/find"
-            android:textStyle="bold"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorAccent"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:focusable="true"/>
-
-    </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/racks_locationBut"
+    <TextView
+        android:id="@+id/frag_racks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="430dp"
-        android:layout_marginLeft="290dp"
-        android:layout_marginStart="290dp"
-        android:clickable="true"
-        app:srcCompat="@drawable/iconmylocation"
-        tools:layout_editor_absoluteX="301dp"
-        tools:layout_editor_absoluteY="514dp"
-        android:focusable="true" />
+        android:text="@string/this_is_the_racks_page"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageView
-        android:id="@+id/racks_racklocation"
-        android:layout_marginTop="350dp"
-        android:layout_marginLeft="150dp"
-        android:layout_marginStart="150dp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:contentDescription="@string/racklocation"
-        android:clickable="true"
-        android:focusable="true"
-        app:srcCompat="@drawable/icon_racklocation" />
-
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
