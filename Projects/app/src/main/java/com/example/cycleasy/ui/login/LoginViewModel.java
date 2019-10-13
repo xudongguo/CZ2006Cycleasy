@@ -4,14 +4,23 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import android.util.Log;
 import android.util.Patterns;
 
 import com.example.cycleasy.data.LoginRepository;
 import com.example.cycleasy.data.Result;
 import com.example.cycleasy.data.model.LoggedInUser;
 import com.example.cycleasy.R;
+import com.facebook.AccessToken;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginViewModel extends ViewModel {
+
+    private static final String TAG = "LoginViewModel";
 
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
@@ -31,14 +40,26 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
+        Log.d(TAG, "login");
 
-        if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
-        } else {
-            loginResult.setValue(new LoginResult(R.string.login_failed));
-        }
+        loginRepository.loginWithEmail(username, password);
+        FirebaseUser user = loginRepository.getUser();
+    }
+
+    public void loginWithFacebook(AccessToken accessToken) {
+        Log.d(TAG, "loginWithFacebook:" + accessToken);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
+        loginRepository.loginWithCredentials(credential);
+        FirebaseUser user = loginRepository.getUser();
+    }
+
+    public void loginWithGoogle(GoogleSignInAccount acc) {
+      Log.d(TAG, "loginWithGoogle:" + acc.getId());
+
+      AuthCredential credential = GoogleAuthProvider.getCredential(acc.getIdToken(), null);
+      loginRepository.loginWithCredentials(credential);
+      FirebaseUser user = loginRepository.getUser();
     }
 
     public void loginDataChanged(String username, String password) {
