@@ -14,10 +14,10 @@
         app:layout_anchor="@+id/exe_linear2"
         app:layout_anchorGravity="center">
 
-        <com.google.android.gms.maps.MapView
+        <!--com.google.android.gms.maps.MapView
             android:id="@+id/exercise_mapview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" /-->
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.appbar.AppBarLayout

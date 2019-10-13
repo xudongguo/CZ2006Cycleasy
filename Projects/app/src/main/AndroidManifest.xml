@@ -31,10 +31,9 @@
             android:label="@string/title_activity_login"
             android:parentActivityName=".SplashActivity">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
+               android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.cycleasy.SplashActivity" />
         </activity>
-        <activity android:name=".ContentActivity" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
