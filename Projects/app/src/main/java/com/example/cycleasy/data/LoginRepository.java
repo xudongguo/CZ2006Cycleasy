@@ -1,8 +1,6 @@
 package com.example.cycleasy.data;
 
 import com.example.cycleasy.data.model.LoggedInUser;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -12,18 +10,18 @@ public class LoginRepository {
 
     private static volatile LoginRepository instance;
 
-    private FirebaseDataSource dataSource;
+    private LoginDataSource dataSource;
 
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
-    private FirebaseUser user;
+    private LoggedInUser user = null;
 
     // private constructor : singleton access
-    private LoginRepository(FirebaseDataSource dataSource) {
+    private LoginRepository(LoginDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public static LoginRepository getInstance(FirebaseDataSource dataSource) {
+    public static LoginRepository getInstance(LoginDataSource dataSource) {
         if (instance == null) {
             instance = new LoginRepository(dataSource);
         }
@@ -39,34 +37,18 @@ public class LoginRepository {
         dataSource.logout();
     }
 
-    private void setLoggedInUser(FirebaseUser user) {
+    private void setLoggedInUser(LoggedInUser user) {
         this.user = user;
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
     }
 
-//    public Result<LoggedInUser> login(String username, String password) {
-//        // handle login
-//        Result<LoggedInUser> result = dataSource.login(username, password);
-//        if (result instanceof Result.Success) {
-//            setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
-//        }
-//        return result;
-//    }
-
-    public void loginWithEmail(String email, String password) {
-        dataSource.loginWithEmail(email, password);
-    }
-
-    public void loginWithCredentials(AuthCredential credential) {
-        dataSource.loginWithCredentials(credential);
-    }
-
-    public FirebaseUser getUser() {
-        return dataSource.getCurrentUser();
-    }
-
-    public void createNewUser(String email, String password) {
-        dataSource.createUserWithEmailAndPassword(email, password);
+    public Result<LoggedInUser> login(String username, String password) {
+        // handle login
+        Result<LoggedInUser> result = dataSource.login(username, password);
+        if (result instanceof Result.Success) {
+            setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
+        }
+        return result;
     }
 }

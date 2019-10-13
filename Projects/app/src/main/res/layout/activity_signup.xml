@@ -17,10 +17,11 @@
         android:id="@+id/imageView"
         android:layout_width="377dp"
         android:layout_height="220dp"
-        android:src="@drawable/ic_account_box_black_24dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ic_account_box_black_24dp" />
 
     <EditText
         android:id="@+id/username"
