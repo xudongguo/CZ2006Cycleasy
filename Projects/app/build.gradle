@@ -9,9 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -41,8 +39,6 @@ dependencies {
     
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.daasuu:BubbleLayout:1.2.0'
-    
-    
 }
 
 apply plugin: 'com.google.gms.google-services'
