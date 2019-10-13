@@ -18,22 +18,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-    private static int CONTENT_TIMEOUT=2000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent ContentIntent=new Intent(MainActivity.this, ContentActivity.class);
-                startActivity(ContentIntent);
-                finish();
-            }
-        },CONTENT_TIMEOUT);
+        setContentView(R.layout.activity_main);
 
-
-
-}
+    }
 }
