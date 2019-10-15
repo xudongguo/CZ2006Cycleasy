@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.example.cycleasy.MainActivity;
 import com.example.cycleasy.R;
 import com.example.cycleasy.SignupActivity;
+import com.example.cycleasy.data.DatabaseHelper;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -60,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     private SignInButton googleSignInButton;
     private LoginButton facebookLoginButton;
     private CallbackManager mCallbackManager;
-
+    private DatabaseHelper db;
 
     private LoginViewModel loginViewModel;
 
@@ -75,6 +76,22 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        db = new DatabaseHelper(this);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = usernameEditText.getText().toString();
+                String passw = passwordEditText.getText().toString();
+                Boolean checkemailpass = db.emailpassword(email,passw);
+                if(checkemailpass==true){
+                    Toast.makeText(getApplicationContext(),"Succesfully Login",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Wrong email or password",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         //own code
 
