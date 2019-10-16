@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:background="@drawable/reportbackground">
 
     <LinearLayout
         android:layout_width="60dp"
@@ -13,7 +13,7 @@
         android:layout_marginEnd="23dp"
         android:layout_marginRight="23dp"
         android:layout_marginBottom="382dp"
-        android:background="@android:color/transparent"
+
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/savednotification"
         app:layout_constraintEnd_toStartOf="@+id/reportTitle"
