@@ -43,7 +43,7 @@ public class SignupActivity extends AppCompatActivity {
                 Boolean checkmail = db.checkemail(email);
                     if (checkmail == true) {
                         if (!isValidPassword(password)) {
-                            Password.setError("Password must contain a digit, lowercase, uppercase and special character!");
+                            Password.setError("Password must contain a digit, lowercase, uppercase and special character (@#$%^&+=)!");
                         } else {
                             if (isValidPassword(password)) {
                                 if (password.equals(cpassword)) {
