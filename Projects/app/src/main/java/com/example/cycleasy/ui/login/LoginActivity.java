@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginButton facebookLoginButton;
     private CallbackManager mCallbackManager;
     private DatabaseHelper db;
+    private TextView forgetPassword;
 
     private LoginViewModel loginViewModel;
 
@@ -77,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         db = new DatabaseHelper(this);
+        forgetPassword = (TextView)findViewById(R.id.forgetpassword);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +92,13 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(),"Wrong email or password",Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgetpasswordActivity.class));
             }
         });
 
