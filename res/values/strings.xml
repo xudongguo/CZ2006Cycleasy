@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Cycleasy</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="exercise">Exercise</string>
+    <string name="route">Route</string>
+    <string name="racks">Racks</string>
+    <string name="me">Me</string>
+    <string name="this_is_the_profile_page">This is the profile page</string>
+    <string name="this_is_the_edit_profile_page">This is the edit profile page</string>
+    <string name="this_is_the_racks_page">This is the racks page</string>
+    <string name="this_is_the_route_page">This is the route page</string>
+    <string name="this_is_the_favpath_page">This is the favpath page</string>
+    <string name="this_is_the_exercise_page">This is the exercise page</string>
+    <string name="this_is_the_cycling_history_page">This is the cycling history page</string>
+    <string name="view_edit_your_favorite_path">View/Edit your favorite path</string>
+    <string name="your_profile">Your profile</string>
+    <string name="your_cycling_history">Your cycling history</string>
+    <string name="launchscreen">launchscreen</string>
+
+    <string name="google_maps_API_key">AIzaSyDW_vO8Zofe8at0AwHE-91_Pa1ZQFTijr8</string>>
+</resources>
