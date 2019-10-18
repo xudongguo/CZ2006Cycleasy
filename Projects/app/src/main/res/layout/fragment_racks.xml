@@ -69,28 +69,26 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
 
         android:id="@+id/racks_layoutbutton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/findbutton"
             android:layout_width="83dp"
             android:layout_height="81dp"
-            android:layout_marginTop="500dp"
-            android:background="@drawable/shape_drawable"
-            android:text="@string/find"
-            android:textStyle="bold"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorAccent"
             android:layout_gravity="center"
+            android:layout_marginTop="500dp"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:srcCompat="@drawable/ic_find_button"
+            app:fabCustomSize="80dp"/>
 
-    </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/racks_locationBut"

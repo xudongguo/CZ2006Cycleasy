@@ -118,17 +118,15 @@
 
         android:orientation="vertical">
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/route_findbutton"
             android:layout_width="83dp"
             android:layout_height="81dp"
             android:layout_marginTop="500dp"
             android:layout_gravity="center"
-            android:background="@drawable/shape_drawable"
-            android:text="@string/find"
-            android:textStyle="bold"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorAccent"
+            app:srcCompat="@drawable/ic_find_button"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:fabCustomSize="80dp"
             android:clickable="true"
             android:focusable="true"
             />
