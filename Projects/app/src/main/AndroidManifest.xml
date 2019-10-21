@@ -3,6 +3,14 @@
     package="com.example.cycleasy">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+
+
 
     <application
         android:allowBackup="true"
@@ -10,9 +18,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/launchericon_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:hardwareAccelerated="true">
 
-        <activity android:name=".SearchableActivity"
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="@string/google_maps_API_key"/>
+
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".Search.SearchableActivity"
             android:windowSoftInputMode="stateAlwaysVisible">
 
             <intent-filter>
@@ -47,8 +64,8 @@
                 android:name="android.app.default_searchable"
                 android:value=".SearchableActivity" />
         </activity>
-        <provider android:name=".SearchSuggestionsProvider"
-            android:authorities="com.example.cycleasy.SearchSuggestionsProvider" />
+        <provider android:name=".Search.SearchSuggestionsProvider"
+            android:authorities="com.example.cycleasy.Search.SearchSuggestionsProvider" />
         <activity android:name=".MainActivity" />
 
         <meta-data
@@ -71,6 +88,8 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".MapActivity"/>
 
     </application>
 

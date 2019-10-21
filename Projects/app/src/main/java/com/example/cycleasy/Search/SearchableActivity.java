@@ -1,26 +1,18 @@
-package com.example.cycleasy;
+package com.example.cycleasy.Search;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Switch;
 import android.widget.Toast;
-import android.widget.Toolbar;
+
+import com.example.cycleasy.R;
 
 import java.util.ArrayList;
 
