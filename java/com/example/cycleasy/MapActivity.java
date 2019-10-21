@@ -146,9 +146,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent keyEvent) {
                 if(actionId == EditorInfo.IME_ACTION_SEARCH
-                ||actionId == EditorInfo.IME_ACTION_DONE
-                ||keyEvent.getAction() == KeyEvent.ACTION_DOWN
-                ||keyEvent.getAction() == KeyEvent.KEYCODE_ENTER){
+                        ||actionId == EditorInfo.IME_ACTION_DONE
+                        ||keyEvent.getAction() == KeyEvent.ACTION_DOWN
+                        ||keyEvent.getAction() == KeyEvent.KEYCODE_ENTER){
 
                     //execute our method for searching
                     geoLocate();
@@ -230,7 +230,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Log.d(TAG,"initMap: initializing map");
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(MapActivity.this);
-        
+
     }
     private void getLocationPermission(){
         //Log.d(TAG, "getLocationPermission: ");
@@ -392,7 +392,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             ArrayList points = null;
 
             PolylineOptions polylineOptions = null;
-            
+
             for(List<HashMap<String,String>> path:lists){
                 points = new ArrayList();
                 polylineOptions = new PolylineOptions();

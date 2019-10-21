@@ -12,68 +12,53 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TabHost;
-import android.util.Log;
-import android.app.Dialog;
-import android.widget.Toast;
-import android.widget.Button;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
-    private static final int ERROR_DIALOG_REQUEST = 9001;
+public class MainActivity extends AppCompatActivity
 
-    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-    private static int CONTENT_TIMEOUT=3000;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                Intent ContentIntent=new Intent(MainActivity.this, ContentActivity.class);
-//                startActivity(ContentIntent);
-//                finish();
-//            }
-//        },CONTENT_TIMEOUT);
+    implements BottomNavigationView.OnNavigationItemSelectedListener  {
 
-        if(isServicesOK()){
-            init();
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+
+            BottomNavigationView navigation = findViewById(R.id.bottom_nav);
+            navigation.setOnNavigationItemSelectedListener(this);
+            loadfragment(new RouteFragment());
+
+
         }
-}
-
-    private void init(){
-        Button btnMap = (Button)findViewById(R.id.btnMap);
-        btnMap.setOnClickListener(new View.OnClickListener(){
-            @Override
-                    public void onClick(View view){
-                Intent intent = new Intent(MainActivity.this,MapActivity.class);
-                startActivity(intent);
+        private boolean loadfragment(Fragment fragment){
+            if (fragment!=null){
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container,fragment)
+                        .commit();
+                return true;
             }
-        });
-    }
-    public boolean isServicesOK() {
-        Log.d(TAG, "isServiceOK: checking google services version");
-
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);
-
-        if(available == ConnectionResult.SUCCESS){
-            //fine
-            Log.d(TAG,"isServicesOK:");
-            return true;
-        }else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
-            //
-            Log.d(TAG,"isServicesOK: ");
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this,available,ERROR_DIALOG_REQUEST);
-            dialog.show();
-        }else{
-            Toast.makeText(this,"You can't make map requests",Toast.LENGTH_SHORT).show();
+            return false;
         }
-        return false;
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment fragment=null;
+            switch (item.getItemId()){
+                case R.id.menu_exercise:
+                    fragment=new ExerciseFragment();
+                    break;
+                case R.id.menu_route:
+                    fragment=new RouteFragment();
+                    break;
+                case R.id.menu_racks:
+                    fragment=new RacksFragment();
+                    break;
+                case R.id.menu_me:
+                    fragment=new MeFragment();
+                    break;
+            }
+            return loadfragment(fragment);
+        }
     }
-}
