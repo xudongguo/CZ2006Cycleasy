@@ -14,12 +14,13 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="370dp"
-        android:layout_height="220dp"
+        android:layout_width="350dp"
+        android:layout_height="200dp"
         android:layout_marginTop="4dp"
         android:src="@drawable/appicon"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.024"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,7 +77,7 @@
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_signin_btn"
-        android:layout_width="0dp"
+        android:layout_width="300dp"
         android:layout_height="45dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
@@ -89,7 +90,7 @@
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/facebook_login_btn"
-        android:layout_width="0dp"
+        android:layout_width="293dp"
         android:layout_height="45dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"

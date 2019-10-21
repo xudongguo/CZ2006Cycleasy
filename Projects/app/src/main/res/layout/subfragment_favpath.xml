@@ -68,13 +68,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/start_path"
@@ -84,7 +84,7 @@
                     android:padding="15dp"
                     android:text="NTU"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14dp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/path"
@@ -94,7 +94,7 @@
                     android:padding="5dp"
                     android:text="to"
                     android:textColor="#000000"
-                    android:textSize="14sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/end_path"
@@ -104,70 +104,72 @@
                     android:padding="15dp"
                     android:text="Jurong East"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:textSize="20sp" />
+
+
+                <ToggleButton
+                    android:id="@+id/favBtn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="95dp"
+                    android:layout_marginStart="95dp"
+                    android:textOff=""
+                    android:background="@drawable/icon_favfilled"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
 
                 <TextView
                     android:id="@+id/distance"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="Distance:"
-                    android:textSize="14sp" />
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/path_dist"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="4km"
                     android:textStyle="bold"
-                    android:textSize="15dp" />
+                    android:textSize="20sp"/>
 
-                <ToggleButton
-                    android:id="@+id/favBtn"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:textOff=""
-                    android:background="@drawable/icon_favfilled"/>
+
+                <Button
+                    android:id="@+id/goCylc_but"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Go"
+                    android:gravity="center"
+                    android:drawableLeft="@drawable/ic_takethispath"
+                    android:drawablePadding="5dp"
+                    android:layout_marginLeft="70dp"
+                    android:textSize="12sp" />
 
             </LinearLayout>
-
-            <Button
-                android:id="@+id/goCylc_but"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/toolbar2"
-                android:text="Take this path"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:textSize="12sp" />
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/start_path"
@@ -177,7 +179,7 @@
                     android:padding="15dp"
                     android:text="NTU"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14dp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/path"
@@ -187,7 +189,7 @@
                     android:padding="5dp"
                     android:text="to"
                     android:textColor="#000000"
-                    android:textSize="14sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/end_path"
@@ -197,70 +199,72 @@
                     android:padding="15dp"
                     android:text="Jurong East"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:textSize="20sp" />
+
+
+                <ToggleButton
+                    android:id="@+id/favBtn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="95dp"
+                    android:layout_marginStart="95dp"
+                    android:textOff=""
+                    android:background="@drawable/icon_favfilled"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
 
                 <TextView
                     android:id="@+id/distance"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="Distance:"
-                    android:textSize="14sp" />
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/path_dist"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="4km"
                     android:textStyle="bold"
-                    android:textSize="15dp" />
+                    android:textSize="20sp"/>
 
-                <ToggleButton
-                    android:id="@+id/favBtn"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:textOff=""
-                    android:background="@drawable/icon_favfilled"/>
+
+                <Button
+                    android:id="@+id/goCylc_but"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Go"
+                    android:gravity="center"
+                    android:drawableLeft="@drawable/ic_takethispath"
+                    android:drawablePadding="5dp"
+                    android:layout_marginLeft="70dp"
+                    android:textSize="12sp" />
 
             </LinearLayout>
-
-            <Button
-                android:id="@+id/goCylc_but"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/toolbar2"
-                android:text="Take this path"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:textSize="12sp" />
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/start_path"
@@ -270,7 +274,7 @@
                     android:padding="15dp"
                     android:text="NTU"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14dp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/path"
@@ -280,7 +284,7 @@
                     android:padding="5dp"
                     android:text="to"
                     android:textColor="#000000"
-                    android:textSize="14sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/end_path"
@@ -290,70 +294,72 @@
                     android:padding="15dp"
                     android:text="Jurong East"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:textSize="20sp" />
+
+
+                <ToggleButton
+                    android:id="@+id/favBtn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="95dp"
+                    android:layout_marginStart="95dp"
+                    android:textOff=""
+                    android:background="@drawable/icon_favfilled"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
 
                 <TextView
                     android:id="@+id/distance"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="Distance:"
-                    android:textSize="14sp" />
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/path_dist"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="4km"
                     android:textStyle="bold"
-                    android:textSize="15dp" />
+                    android:textSize="20sp"/>
 
-                <ToggleButton
-                    android:id="@+id/favBtn"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:textOff=""
-                    android:background="@drawable/icon_favfilled"/>
+
+                <Button
+                    android:id="@+id/goCylc_but"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Go"
+                    android:gravity="center"
+                    android:drawableLeft="@drawable/ic_takethispath"
+                    android:drawablePadding="5dp"
+                    android:layout_marginLeft="70dp"
+                    android:textSize="12sp" />
 
             </LinearLayout>
-
-            <Button
-                android:id="@+id/goCylc_but"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/toolbar2"
-                android:text="Take this path"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:textSize="12sp" />
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/start_path"
@@ -363,7 +369,7 @@
                     android:padding="15dp"
                     android:text="NTU"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14dp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/path"
@@ -373,7 +379,7 @@
                     android:padding="5dp"
                     android:text="to"
                     android:textColor="#000000"
-                    android:textSize="14sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/end_path"
@@ -383,70 +389,72 @@
                     android:padding="15dp"
                     android:text="Jurong East"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:textSize="20sp" />
+
+
+                <ToggleButton
+                    android:id="@+id/favBtn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="95dp"
+                    android:layout_marginStart="95dp"
+                    android:textOff=""
+                    android:background="@drawable/icon_favfilled"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
 
                 <TextView
                     android:id="@+id/distance"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="Distance:"
-                    android:textSize="14sp" />
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/path_dist"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="4km"
                     android:textStyle="bold"
-                    android:textSize="15dp" />
+                    android:textSize="20sp"/>
 
-                <ToggleButton
-                    android:id="@+id/favBtn"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:textOff=""
-                    android:background="@drawable/icon_favfilled"/>
+
+                <Button
+                    android:id="@+id/goCylc_but"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Go"
+                    android:gravity="center"
+                    android:drawableLeft="@drawable/ic_takethispath"
+                    android:drawablePadding="5dp"
+                    android:layout_marginLeft="70dp"
+                    android:textSize="12sp" />
 
             </LinearLayout>
-
-            <Button
-                android:id="@+id/goCylc_but"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/toolbar2"
-                android:text="Take this path"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:textSize="12sp" />
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/start_path"
@@ -456,7 +464,7 @@
                     android:padding="15dp"
                     android:text="NTU"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14dp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/path"
@@ -466,7 +474,7 @@
                     android:padding="5dp"
                     android:text="to"
                     android:textColor="#000000"
-                    android:textSize="14sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/end_path"
@@ -476,57 +484,59 @@
                     android:padding="15dp"
                     android:text="Jurong East"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:textSize="20sp" />
+
+
+                <ToggleButton
+                    android:id="@+id/favBtn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="95dp"
+                    android:layout_marginStart="95dp"
+                    android:textOff=""
+                    android:background="@drawable/icon_favfilled"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
 
                 <TextView
                     android:id="@+id/distance"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="Distance:"
-                    android:textSize="14sp" />
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/path_dist"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="4km"
                     android:textStyle="bold"
-                    android:textSize="15dp" />
+                    android:textSize="20sp"/>
 
-                <ToggleButton
-                    android:id="@+id/favBtn"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:textOff=""
-                    android:background="@drawable/icon_favfilled"/>
+
+                <Button
+                    android:id="@+id/goCylc_but"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Go"
+                    android:gravity="center"
+                    android:drawableLeft="@drawable/ic_takethispath"
+                    android:drawablePadding="5dp"
+                    android:layout_marginLeft="70dp"
+                    android:textSize="12sp" />
 
             </LinearLayout>
-
-            <Button
-                android:id="@+id/goCylc_but"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/toolbar2"
-                android:text="Take this path"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:textSize="12sp" />
 
         </LinearLayout>
     </LinearLayout>

@@ -17,6 +17,7 @@
     <string name="your_profile">Your profile</string>
     <string name="your_cycling_history">Your cycling history</string>
     <string name="launchscreen">launchscreen</string>
+    <string name="google_maps_API_key">AIzaSyDW_vO8Zofe8at0AwHE-91_Pa1ZQFTijr8</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

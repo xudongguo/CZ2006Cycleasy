@@ -60,8 +60,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/dateBtn"
@@ -79,16 +80,16 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/icon_distancecycled"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/icon_distancecycled" />
 
                 <TextView
                     android:id="@+id/hist_dist_title"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:padding="5dp"
-                    android:gravity="center_vertical"
                     android:text="Distance:"
                     android:textAlignment="gravity"
                     android:textColor="#000000"
@@ -119,16 +120,16 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/time_icon"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/time_icon" />
 
                 <TextView
                     android:id="@+id/time_title"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:padding="5dp"
-                    android:gravity="center_vertical"
                     android:text="Time:"
                     android:textAlignment="gravity"
                     android:textColor="#000000"
@@ -186,11 +187,13 @@
 
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/dateBtn"
@@ -208,16 +211,16 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/icon_distancecycled"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/icon_distancecycled" />
 
                 <TextView
                     android:id="@+id/hist_dist_title"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:padding="5dp"
-                    android:gravity="center_vertical"
                     android:text="Distance:"
                     android:textAlignment="gravity"
                     android:textColor="#000000"
@@ -248,16 +251,16 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/time_icon"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/time_icon" />
 
                 <TextView
                     android:id="@+id/time_title"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:padding="5dp"
-                    android:gravity="center_vertical"
                     android:text="Time:"
                     android:textAlignment="gravity"
                     android:textColor="#000000"
@@ -315,11 +318,13 @@
 
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/dateBtn"
@@ -337,16 +342,16 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/icon_distancecycled"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/icon_distancecycled" />
 
                 <TextView
                     android:id="@+id/hist_dist_title"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:padding="5dp"
-                    android:gravity="center_vertical"
                     android:text="Distance:"
                     android:textAlignment="gravity"
                     android:textColor="#000000"
@@ -377,16 +382,16 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/time_icon"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/time_icon" />
 
                 <TextView
                     android:id="@+id/time_title"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:padding="5dp"
-                    android:gravity="center_vertical"
                     android:text="Time:"
                     android:textAlignment="gravity"
                     android:textColor="#000000"
@@ -444,11 +449,13 @@
 
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/dateBtn"
@@ -466,16 +473,16 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/icon_distancecycled"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/icon_distancecycled" />
 
                 <TextView
                     android:id="@+id/hist_dist_title"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:padding="5dp"
-                    android:gravity="center_vertical"
                     android:text="Distance:"
                     android:textAlignment="gravity"
                     android:textColor="#000000"
@@ -506,16 +513,16 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/time_icon"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/time_icon" />
 
                 <TextView
                     android:id="@+id/time_title"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:padding="5dp"
-                    android:gravity="center_vertical"
                     android:text="Time:"
                     android:textAlignment="gravity"
                     android:textColor="#000000"
@@ -573,11 +580,13 @@
 
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/dateBtn"
@@ -595,16 +604,16 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/icon_distancecycled"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/icon_distancecycled" />
 
                 <TextView
                     android:id="@+id/hist_dist_title"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:padding="5dp"
-                    android:gravity="center_vertical"
                     android:text="Distance:"
                     android:textAlignment="gravity"
                     android:textColor="#000000"
@@ -635,16 +644,16 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/time_icon"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/time_icon" />
 
                 <TextView
                     android:id="@+id/time_title"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:padding="5dp"
-                    android:gravity="center_vertical"
                     android:text="Time:"
                     android:textAlignment="gravity"
                     android:textColor="#000000"

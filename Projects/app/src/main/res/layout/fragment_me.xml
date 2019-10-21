@@ -41,22 +41,21 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintStart_toEndOf="@id/profilepic"/>
+                app:layout_constraintStart_toEndOf="@id/profilePic"/>
 
             <ImageView
-                android:id="@+id/profilepic"
-                android:layout_width="117dp"
-                android:layout_height="77dp"
-                android:contentDescription="@string/profilepicture"
-                android:hapticFeedbackEnabled="false"
-                app:srcCompat="@drawable/ic_cyclisticon"
-                android:paddingLeft="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:id="@+id/profilePic"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/circle"
+                app:layout_constraintTop_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.521" />
+                app:srcCompat="@drawable/ic_profile"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -124,8 +123,8 @@
                 android:layout_height="110dp"
                 android:background="@color/colorPrimary"
                 android:drawableRight="@drawable/rightarrowlight"
-                android:drawableLeft="@drawable/ic_profile"
-                android:drawableStart="@drawable/ic_profile"
+                android:drawableLeft="@drawable/ic_resume"
+                android:drawableStart="@drawable/ic_resume"
                 android:drawableEnd="@drawable/rightarrowlight"
                 android:text="@string/your_profile"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused"
