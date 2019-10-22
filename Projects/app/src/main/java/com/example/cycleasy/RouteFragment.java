@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.cycleasy.Search.SearchableActivity;
@@ -60,20 +61,26 @@ import static android.app.Activity.RESULT_OK;
 
 public class RouteFragment extends Fragment implements OnMapReadyCallback {
 
+
+    //true if there is message sent from other fragment, false if otherwise
+    private boolean messagepending = false;
+    private MapView mMapView;
+    private GoogleMap mMap;
+    ArrayList<LatLng> listPoints = new ArrayList<>();
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private Boolean mLocationPermissionGranted = false;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final String TAG = "RouteActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-    //true if there is message sent from other fragment, false if otherwise
-    private boolean messagepending=false;
-    private MapView mMapView;
-    private GoogleMap mMap;
-    ArrayList<LatLng> listPoints;
-    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
-    private FusedLocationProviderClient mFusedLocationProviderClient;
-    private Boolean mLocationPermissionGranted = true;
     private static final float DEFAULT_ZOOM = 15f;
     Context thiscontext;
-    private String startpt,endpt;
+    private String startpt, endpt;
+    private Address startadd, endadd;
+
     @Nullable
     @Override
 
@@ -83,26 +90,25 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         final TextView topsearchbar = (TextView) view.findViewById((R.id.route_topsearchhbar));
         final TextView botsearchbar = (TextView) view.findViewById((R.id.route_botsearchbar));
         mMapView = (MapView) view.findViewById(R.id.route_mapview);
-
+        getLocationPermission();
         initGoogleMap(savedInstanceState);
         mMapView.getMapAsync(this);
 
         //if there is message passed from subfragments, set the search information based on the message.
-        if(messagepending){
+        if (messagepending) {
             Log.d(TAG, "onmessagepending: message pending");
             startpt = getArguments().getString("Start Point");
             endpt = getArguments().getString("End Point");
             if (!startpt.isEmpty() && !endpt.isEmpty()) {
                 topsearchbar.setText(startpt);
-                geoLocate(startpt);
                 botsearchbar.setText(endpt);
-                messagepending=false;
                 geoLocate(endpt);
+                messagepending = false;
+
             }
 
 
         }
-
 
 
         //top search bar activity
@@ -176,26 +182,64 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View view) {
                 //TODO for when "FIND" BUTTON IS CLICKED
+                if (listPoints.size() == 2) {
+                    listPoints.clear();
+                    mMap.clear();
+                }
                 favBut.show();
                 shareBut.show();
+                if (startadd == null)
+                    Toast.makeText(thiscontext, "starting point not entered", Toast.LENGTH_SHORT).show();
+                else if (endadd == null)
+                    Toast.makeText(thiscontext, "destination not entered", Toast.LENGTH_SHORT).show();
+                else {
+                    //Reset marker when already 2
 
+                    //Save first point selected
+                    LatLng startLL = new LatLng(startadd.getLatitude(), startadd.getLongitude());
+                    LatLng endLL = new LatLng(endadd.getLatitude(), endadd.getLongitude());
+                    listPoints.add(startLL);
+                    listPoints.add(endLL);
+                    //Create marker
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(endLL);
 
+                /*if (listPoints.size() == 1) {
+                    //Add first marker to the map
+                    Log.d(TAG, "onMapLongClick: adding first point");
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                } else {
+                    //Add second market to the map
+                    Log.d(TAG, "onMapLongClick: adding second point");
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                }*/
+                    //mMap.addMarker(markerOptions);
+                    //request get direction code bellow
+                    if (listPoints.size() == 2) {
+                        Log.d(TAG, "onMapLongClick: Searching now");
+                        String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
+                        RouteFragment.TaskRequestDirections taskRequestDirections = new RouteFragment.TaskRequestDirections();
+                        taskRequestDirections.execute(url);
+                    }
+
+                }
             }
         });
+
 
         //mylocation button activity
         FloatingActionButton mylocatBut = (FloatingActionButton) view.findViewById(R.id.route_mylocationBut);
         mylocatBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               getDeviceLocation();
+                getDeviceLocation();
 
 
             }
         });
 
-        return view;
 
+        return view;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -207,7 +251,8 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
                 String displaytxt = data.getExtras().getString("query");
                 TextView topsearchbar = (TextView) getView().findViewById(R.id.route_topsearchhbar);
                 topsearchbar.setText(displaytxt);
-                geoLocate(displaytxt);
+                startpt = displaytxt;
+                startadd = geoLocate(displaytxt);
             } else if (resultCode == RESULT_CANCELED) {
                 //if activity closed abnormally
             }
@@ -219,17 +264,20 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
                 String displaytxt = data.getExtras().getString("query");
                 TextView botsearchbar = (TextView) getView().findViewById(R.id.route_botsearchbar);
                 botsearchbar.setText(displaytxt);
-                geoLocate(displaytxt);
+                endpt = displaytxt;
+                endadd = geoLocate(displaytxt);
+
             } else if (resultCode == RESULT_CANCELED) {
                 //if activity closed abnormally
+                Log.d(TAG, "resultcode: result cancelled, messaage receive failure");
             }
         }
     }
 
 
     //set the state of messagepending
-    public void setMessageSignal(boolean signal){
-        messagepending=signal;
+    public void setMessageSignal(boolean signal) {
+        messagepending = signal;
     }
 
 
@@ -303,7 +351,8 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
-    private void initGoogleMap(Bundle savedInstanceState){
+
+    private void initGoogleMap(Bundle savedInstanceState) {
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
@@ -335,7 +384,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
             //Fx: find a location.
 
             //Fx: find bicycling directions between 2 points
-            mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+           /* mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
                 @Override
                 public void onMapLongClick(LatLng latLng) {
                     //Reset marker when already 2
@@ -367,15 +416,16 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
                         taskRequestDirections.execute(url);
                     }
                 }
-            });
+            });*/
         }
     }
+
     // get request about starting and ending points and convert to url, and use url to request from google map api
-    private String getRequestUrl(LatLng origin,LatLng dest){
+    private String getRequestUrl(LatLng origin, LatLng dest) {
         // value of origin
-        String str_org = "origin="+origin.latitude+","+origin.longitude;
+        String str_org = "origin=" + origin.latitude + "," + origin.longitude;
         // value of destination
-        String str_dest = "destination="+dest.latitude+","+dest.longitude;
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
         // set value anble the sensor
         //String sensor = "sensor=false";
         // Mode for finding direction
@@ -383,12 +433,12 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         // Build the full param
         String api_key = "&key=AIzaSyDW_vO8Zofe8at0AwHE-91_Pa1ZQFTijr8";
 
-        String param = str_org +"&"+str_dest+"&"+mode+api_key;
+        String param = str_org + "&" + str_dest + "&" + mode + api_key;
         // Output format
         String output = "json";
         // Create url to request
-        String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+param;
-        Log.d(TAG, "getRequestUrl: "+url);
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param;
+        Log.d(TAG, "getRequestUrl: " + url);
         return url;
     }
 
@@ -412,37 +462,37 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
 //        });
 //    }
 
-    private Address geoLocate(String query){
+    private Address geoLocate(String query) {
         Log.d(TAG, "geoLocate: geolocating");
 
         Geocoder geocoder = new Geocoder(getContext());
         List<Address> list = new ArrayList<>();
-        try{
-            list = geocoder.getFromLocationName(query,1);
-        }catch(IOException e){
-            Log.e(TAG,"geolocate: IOException"+e.getMessage());
+        try {
+            list = geocoder.getFromLocationName(query, 1);
+        } catch (IOException e) {
+            Log.e(TAG, "geolocate: IOException" + e.getMessage());
         }
 
-        if(list.size()>0){
+        if (list.size() > 0) {
 
             Log.d(TAG, "geoLocate: found something");
             Address address = list.get(0);
 
-            Log.d(TAG, "geoLocate: found a location: "+address.toString());
+            Log.d(TAG, "geoLocate: found a location: " + address.toString());
             //Toast.makeText(this,address.toString(),Toast.LENGTH_SHORT).show();
 
-            moveCamera(new LatLng(address.getLatitude(),address.getLongitude()),DEFAULT_ZOOM,address.getAddressLine(0));
+            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0));
 
             return address;
         }
         return null;
     }
 
-    private void moveCamera(LatLng latLng, float zoom,String title){
-        Log.d(TAG, "moveCamera: moving the camera to: "+latLng.latitude +", lng: "+latLng.longitude);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
+    private void moveCamera(LatLng latLng, float zoom, String title) {
+        Log.d(TAG, "moveCamera: moving the camera to: " + latLng.latitude + ", lng: " + latLng.longitude);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
-        if(!title.equals("My Location")) {
+        if (!title.equals("My Location")) {
             MarkerOptions options = new MarkerOptions()
                     .position(latLng)
                     .title(title);
@@ -452,37 +502,84 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         hideSoftKeyboard();
     }
 
-    private void hideSoftKeyboard(){
+    private void hideSoftKeyboard() {
         Log.d(TAG, "hideSoftKeyboard: hiding");
-       // this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        // this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-    private void getDeviceLocation(){
-        Log.d(TAG,"getDeviceLocation: getting the devices current location");
+    private void getDeviceLocation() {
+        Log.d(TAG, "getDeviceLocation: getting the devices current location");
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(thiscontext);
 
-        try{
-            if(mLocationPermissionGranted){
+        try {
+            if (mLocationPermissionGranted) {
                 final Task location = mFusedLocationProviderClient.getLastLocation();
                 location.addOnCompleteListener(new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Log.d(TAG, "onComplete: foundLocation!");
                             Location currentLocation = (Location) task.getResult();
-                            moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
                                     DEFAULT_ZOOM,
                                     "My Location");
-                        }else{
+                        } else {
                             Log.d(TAG, "onComplete: current location is null");
-                            Toast.makeText(getContext(),"unable to get current location",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "unable to get current location", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
             }
-        }catch(SecurityException e){
-            Log.e(TAG, "getDeviceLocation: SecurityException"+e.getMessage());
+        } catch (SecurityException e) {
+            Log.e(TAG, "getDeviceLocation: SecurityException" + e.getMessage());
+        }
+    }
+
+    private void getLocationPermission() {
+        //Log.d(TAG, "getLocationPermission: ");
+        Log.d(TAG, "getLocationPermission: getting location permissions");
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION};
+
+        if (ContextCompat.checkSelfPermission(thiscontext,
+                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(thiscontext,
+                    COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mLocationPermissionGranted = true;
+            } else {
+                requestPermissions(
+                        permissions,
+                        LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        } else {
+            requestPermissions(
+                    permissions,
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: called.");
+        //super.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        mLocationPermissionGranted = false;
+
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < grantResults.length; i++) {
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            mLocationPermissionGranted = false;
+                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
+                            return;
+                        }
+                    }
+                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
+                    mLocationPermissionGranted = true;
+                    //initialize the map
+                }
+            }
         }
     }
 
@@ -491,7 +588,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         String responseString = "";
         InputStream inputStream = null;
         HttpURLConnection httpURLConnection = null;
-        try{
+        try {
             URL url = new URL(reqUrl);
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.connect();
@@ -521,10 +618,11 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         }
         return responseString;
     }
+
     // create a AsyncTask to call request direction
-    public class TaskRequestDirections extends AsyncTask<String,Void,String> {
+    public class TaskRequestDirections extends AsyncTask<String, Void, String> {
         @Override
-        protected String doInBackground(String... strings){
+        protected String doInBackground(String... strings) {
             String responseString = "";
             try {
                 responseString = requestDirection(strings[0]);
@@ -535,7 +633,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         }
 
         @Override
-        protected void onPostExecute(String s){
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
             //Parse json here
             Log.d(TAG, "onPostExecute: calling taskparser");
@@ -545,7 +643,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    public class TaskParser extends AsyncTask<String,Void,List<List<HashMap<String,String>>>> {
+    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
 
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
@@ -563,14 +661,23 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         }
 
         @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            Toast.makeText(thiscontext, "finding", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
         protected void onPostExecute(List<List<HashMap<String, String>>> lists) {
             //super.onPostExecute(lists);
             // Get list route and display it into the map
+            super.onPostExecute(lists);
+
             ArrayList points = null;
 
             PolylineOptions polylineOptions = null;
 
             for (List<HashMap<String, String>> path : lists) {
+                Log.d(TAG, "onPostExecute: drawing route");
                 points = new ArrayList();
                 polylineOptions = new PolylineOptions();
 
@@ -588,12 +695,11 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
                 polylineOptions.geodesic(true);
             }
             if (polylineOptions != null) {
-                mMap.addPolyline(polylineOptions);
-            } else {
-                Log.d(TAG, "onPostExecute: Direction not found!");
-                Toast.makeText(getContext(), "Direction not found", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
 }
+
+
+
