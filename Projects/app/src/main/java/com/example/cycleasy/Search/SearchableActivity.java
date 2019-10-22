@@ -4,6 +4,7 @@ package com.example.cycleasy.Search;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompatSideChannelService;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
@@ -37,7 +38,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.cycleasy.DirectionParser;
+import com.example.cycleasy.R;
+import com.example.cycleasy.RouteFragment;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -52,6 +58,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -70,26 +77,33 @@ import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SearchableActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class SearchableActivity extends AppCompatActivity //implements OnMapReadyCallback
+{
     ArrayList<String> list = new ArrayList<>();
     ArrayAdapter adapter;
 
-    private static final String TAG = "MapActivity";
+    private static final String TAG = "SearchableActivity";
     private GoogleMap mMap;
     ArrayList<LatLng> listPoints;
-    private Boolean mLocationPermissionGranted = false;
+    private Boolean mLocationPermissionGranted = true;
     private static final float DEFAULT_ZOOM = 15f;
     private EditText mSearchText;
+    private Address address;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+    private MapView mMapView;
+    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchlayout);
         SearchView searchView=findViewById(R.id.searchview);
-
+        //mMapView=(MapView)findViewById(R.id.search_mapview);
         //set different queryhint texts for searches in different fragments
+        //initGoogleMap(savedInstanceState);
+        //mMapView.getMapAsync(this);
         final Intent thisIntent=getIntent();
+
         String sender=thisIntent.getExtras().getString("Sender");
         switch (sender){
             case "RacksSearchBar":
@@ -108,6 +122,7 @@ public class SearchableActivity extends AppCompatActivity implements OnMapReadyC
                 // then user is supposed to long click on the position he wants to end with
                 break;
         }
+
         //force keyboard to popup automatically
         searchView.setIconified(false);
         ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).
@@ -116,12 +131,12 @@ public class SearchableActivity extends AppCompatActivity implements OnMapReadyC
 
         //RECEIVING QUERY
         //Listener for users' actions in the searchView
+
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             //when query is submitted
             public boolean onQueryTextSubmit(String query) {
-                Toast toast=Toast.makeText(getApplicationContext(),"query submitted",Toast.LENGTH_SHORT);
-                toast.show();
                 //TODO for search suggestions, currently not working...
                 SearchRecentSuggestions suggestions = new SearchRecentSuggestions(getBaseContext(),
                         SearchSuggestionsProvider.AUTHORITY, SearchSuggestionsProvider.MODE);
@@ -131,7 +146,6 @@ public class SearchableActivity extends AppCompatActivity implements OnMapReadyC
                 //pass query data back to fragment for display
                 thisIntent.putExtra("query",query);
                 setResult(RESULT_OK,thisIntent);
-                //finish search activity
                 finish();
                 return false;
             }
@@ -166,11 +180,10 @@ public class SearchableActivity extends AppCompatActivity implements OnMapReadyC
 
     protected Boolean doMySearch(String query){
         //TODO by backend, actual search in database
-        Address address = geoLocate(query);
-
+            //address = geoLocate(query);
         return true;
     }
-
+/*
     // When map is ready
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -179,6 +192,7 @@ public class SearchableActivity extends AppCompatActivity implements OnMapReadyC
         mMap = googleMap;
 
         if (mLocationPermissionGranted) {
+            Toast.makeText(this, "get location",Toast.LENGTH_SHORT).show();
             getDeviceLocation();
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -316,6 +330,7 @@ public class SearchableActivity extends AppCompatActivity implements OnMapReadyC
     }
 
     private void getDeviceLocation(){
+        Toast.makeText(this, "get location",Toast.LENGTH_SHORT).show();
         Log.d(TAG,"getDeviceLocation: getting the devices current location");
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -329,7 +344,6 @@ public class SearchableActivity extends AppCompatActivity implements OnMapReadyC
                         if(task.isSuccessful()){
                             Log.d(TAG, "onComplete: foundLocation!");
                             Location currentLocation = (Location) task.getResult();
-
                             moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),
                                     DEFAULT_ZOOM,
                                     "My Location");
@@ -454,26 +468,66 @@ public class SearchableActivity extends AppCompatActivity implements OnMapReadyC
             }
         }
     }
-   /* public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.searchview).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
 
-        return true;}
+   public void onSaveInstanceState(Bundle outState) {
+       super.onSaveInstanceState(outState);
+
+       Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
+       if (mapViewBundle == null) {
+           mapViewBundle = new Bundle();
+           outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
+       }
+
+       mMapView.onSaveInstanceState(mapViewBundle);
+   }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        return super.onOptionsItemSelected(item);
-    }*/
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
 
-}}
+    @Override
+    public void onStart() {
+        super.onStart();
+        mMapView.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mMapView.onStop();
+    }
+
+
+    @Override
+    public void onPause() {
+        mMapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mMapView.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
+    private void initGoogleMap(Bundle savedInstanceState){
+        Bundle mapViewBundle = null;
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
+        }
+
+        mMapView.onCreate(mapViewBundle);
+
+        mMapView.getMapAsync(this);
+    }
+
+*/
+
+}

@@ -12,10 +12,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!--com.google.android.gms.maps.MapView
+        <com.google.android.gms.maps.MapView
             android:id="@+id/racks_mapview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" /-->
+            android:layout_height="match_parent"
+            android:apiKey="AIzaSyDW_vO8Zofe8at0AwHE-91_Pa1ZQFTijr8"
+            />
 
     </LinearLayout>
 

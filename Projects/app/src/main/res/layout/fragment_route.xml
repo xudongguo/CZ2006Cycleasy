@@ -16,6 +16,7 @@
             android:id="@+id/route_mapview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:apiKey="AIzaSyDW_vO8Zofe8at0AwHE-91_Pa1ZQFTijr8"
             />
 
     </LinearLayout>
