@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment class for activities in cycling history page
  */
 public class subFragment_cychis extends Fragment {
 

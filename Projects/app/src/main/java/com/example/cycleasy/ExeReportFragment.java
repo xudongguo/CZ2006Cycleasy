@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-
+/**
+ * Fragment class for activities in exercise report page
+ */
 public class ExeReportFragment extends Fragment {
 
 

@@ -12,7 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-
+/**
+ * Fragment class for activities in me page
+ */
 public class MeFragment extends Fragment {
     @Nullable
     @Override

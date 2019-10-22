@@ -18,7 +18,9 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-
+/**
+ * Fragment class for activities in favorite path page
+ */
 public class subFragment_favpath extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.subfragment_favpath, null);

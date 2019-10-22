@@ -23,6 +23,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
+/**
+ * Main activity to govern fragment transitions
+ */
 public class MainActivity extends AppCompatActivity
 
     implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +45,11 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /**
+     * To load a particular fragment
+     * @param fragment fragment to be loaded
+     * @return return false if fragment is null, true otherwise
+     */
     private boolean loadfragment(Fragment fragment) {
         if (fragment != null) {
             getSupportFragmentManager()
@@ -53,6 +61,11 @@ public class MainActivity extends AppCompatActivity
         return false;
     }
 
+    /**
+     * Method to select one tab from the bottom menu
+     * @param item
+     * @return return loadfragment(fragment)
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;

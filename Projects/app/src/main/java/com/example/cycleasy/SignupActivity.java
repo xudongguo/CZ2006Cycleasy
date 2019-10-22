@@ -19,6 +19,9 @@ import com.example.cycleasy.ui.login.LoginActivity;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Activity class for activities in sign up page
+ */
 public class SignupActivity extends AppCompatActivity {
 
     private EditText Name, Email, Password, CPassword;

@@ -76,12 +76,13 @@ import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+/**
+ * Activity class for activities in search page
+ */
 public class SearchableActivity extends AppCompatActivity //implements OnMapReadyCallback
 {
     ArrayList<String> list = new ArrayList<>();
     ArrayAdapter adapter;
-
     private static final String TAG = "SearchableActivity";
     private GoogleMap mMap;
     ArrayList<LatLng> listPoints;

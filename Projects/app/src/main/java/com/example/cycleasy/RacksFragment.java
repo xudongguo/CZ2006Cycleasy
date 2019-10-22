@@ -65,6 +65,9 @@ import java.util.Random;
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
+/**
+ * Fragment class for activities in racks page
+ */
 public class RacksFragment extends Fragment implements OnMapReadyCallback {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
@@ -144,6 +147,13 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
         return view;
 
     }
+
+    /**
+     * Method to be called when SearchableActivity finished
+     * @param requestCode request code to be validated with SearchableAvtivity
+     * @param resultCode result code to be validated with SearchableActivity
+     * @param data data received from the previous intent
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -242,6 +252,11 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
         mMapView.getMapAsync(this);
     }
 
+
+    /**
+     * called when map is initialized and ready for geolocating and route searching
+     * @param googleMap non null googleMap instance passed in for performing map functions
+     */
     // When map is ready
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -340,6 +355,12 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
 //        });
 //    }
 
+
+    /**
+     * locating a geographical location from a location name of type String, and move the camera to that location
+     * @param query query text containing the name of the location
+     * @return Address of the location
+     */
     private Address geoLocate(String query){
         Log.d(TAG, "geoLocate: geolocating");
 
@@ -366,6 +387,13 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
         return null;
     }
 
+
+    /**
+     * move camera towards a point with latitude and longtitude parsed in LatLng, and camera zoom of zoom and location name title
+     * @param latLng LatLng object containing latitude and longtitude of an address
+     * @param zoom camera zoom value
+     * @param title location name
+     */
     private void moveCamera(LatLng latLng, float zoom,String title){
         Log.d(TAG, "moveCamera: moving the camera to: "+latLng.latitude +", lng: "+latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
@@ -385,6 +413,10 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
         // this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
+
+    /**
+     * Get the location of this device
+     */
     private void getDeviceLocation(){
         Log.d(TAG,"getDeviceLocation: getting the devices current location");
 
