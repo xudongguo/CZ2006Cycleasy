@@ -86,7 +86,7 @@
             android:layout_marginTop="500dp"
             android:clickable="true"
             android:focusable="true"
-            app:backgroundTint="@color/colorPrimaryDark"
+            app:backgroundTint="@color/colorPrimary"
             app:srcCompat="@drawable/ic_find_button"
             app:fabCustomSize="80dp"/>
 

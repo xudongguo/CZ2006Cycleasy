@@ -127,7 +127,7 @@
             android:layout_marginTop="500dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_find_button"
-            app:backgroundTint="@color/colorPrimaryDark"
+            app:backgroundTint="@color/colorPrimary"
             app:fabCustomSize="80dp"
             android:clickable="true"
             android:focusable="true"

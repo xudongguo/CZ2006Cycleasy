@@ -72,5 +72,8 @@
     <string name="link_signup">No account yet? Sign up</string>
     <string name="action_sign_up">Sign up</string>
     <string name="or">OR</string>
+    <string name="prompt_password_confirm">Confirm Password</string>
+    <string name="sign_in_with_google">Continue with Google</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
 
 </resources>
