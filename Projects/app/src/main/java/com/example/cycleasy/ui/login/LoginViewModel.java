@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.cycleasy.data.LoginDataSource;
 import com.example.cycleasy.data.UserRepository;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginViewModel extends ViewModel implements LoginDataSource {
 
@@ -54,6 +55,11 @@ public class LoginViewModel extends ViewModel implements LoginDataSource {
         userRepository.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    public FirebaseUser getCurrentUser() {
+        return userRepository.getCurrentUser();
+    }
+
     private MutableLiveData<Integer> getLoading() {
         if (loading == null) {
             loading = new MutableLiveData<>();
@@ -70,7 +76,7 @@ public class LoginViewModel extends ViewModel implements LoginDataSource {
             return false;
         }
 
-        if (pass == null || pass.isEmpty() || pass.length() < 8 || pass.length() > 15) {
+        if (pass == null || pass.isEmpty() || pass.length() < 8) {
             System.out.println(pass);
             return false;
         }

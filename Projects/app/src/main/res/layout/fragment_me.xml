@@ -2,15 +2,13 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:background="@drawable/mebackgroundgray"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/mebackgroundgray"
         android:orientation="horizontal"></LinearLayout>
 
     <com.google.android.material.appbar.AppBarLayout
@@ -62,7 +60,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="629dp"
+        android:layout_height="531dp"
 
 
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
@@ -71,13 +69,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/favpath"
-                style="@style/Widget.AppCompat.Button.Colored"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_marginBottom="5dp"
                 android:background="@color/white"
+                android:backgroundTint="@color/white"
                 android:drawableStart="@drawable/ic_favorite"
                 android:drawableLeft="@drawable/ic_favorite"
                 android:drawableEnd="@drawable/rightarrowlight"
@@ -88,54 +87,57 @@
                 android:paddingLeft="10dp"
                 android:text="@string/view_edit_your_favorite_path"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                app:icon="@drawable/ic_favorite"
+                app:iconPadding="24dp"
+                app:iconTint="@null"
                 app:layout_constraintBottom_toTopOf="@+id/cychistory"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/cychistory"
-                style="@style/Widget.AppCompat.Button.Colored"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_marginBottom="5dp"
                 android:background="@color/white"
-                android:drawableRight="@drawable/rightarrowlight"
-                android:text="@string/your_cycling_history"
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:backgroundTint="@color/white"
+                app:icon="@drawable/ic_history"
+                app:iconPadding="24dp"
+                app:iconTint="@null"
                 android:drawableStart="@drawable/ic_history"
                 android:drawableLeft="@drawable/ic_history"
                 android:drawableEnd="@drawable/rightarrowlight"
-                android:paddingLeft="5dp"
-                android:gravity="center|start"
+                android:drawableRight="@drawable/rightarrowlight"
                 android:drawablePadding="20dp"
+                android:gravity="center|start"
+                android:paddingLeft="5dp"
+                android:text="@string/your_cycling_history"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
                 app:layout_constraintBottom_toTopOf="@+id/editprofile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/favpath"
-                 />
+                app:layout_constraintTop_toBottomOf="@+id/favpath" />
 
-            <Button
-                android:id="@+id/editprofile"
-                style="@style/Widget.AppCompat.Button.Colored"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editprofilebtn"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:background="@color/white"
-                android:drawableRight="@drawable/rightarrowlight"
-                android:drawableLeft="@drawable/ic_resume"
-                android:drawableStart="@drawable/ic_resume"
-                android:drawableEnd="@drawable/rightarrowlight"
-                android:text="@string/your_profile"
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                android:paddingLeft="10dp"
-                android:gravity="center|start"
-                android:drawablePadding="20dp"
+                android:backgroundTint="@color/white"
+                app:icon="@drawable/ic_resume"
+                app:iconPadding="24dp"
+                app:iconTint="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cychistory"/>
-
+                app:layout_constraintTop_toBottomOf="@+id/cychistory"
+                android:text="@string/your_profile"
+                android:gravity="center|start"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,27 @@
 <resources>
+    <!--Project setup Strings-->
+    <string name="google_web_client_id">804417926066-bd1qrf9muek353dvdeb0ppjtaqv3jc9q.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">385355792132912</string>
+    <string name="fb_login_protocol_scheme">fb385355792132912</string>
+
+    <!--Login and Signup strings-->
+    <string name="title_activity_login">Log in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_confirm_password">Reenter password</string>
+    <string name="action_sign_in">Login</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >8 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="link_signup">No account yet? Sign up</string>
+    <string name="action_sign_up">Sign up</string>
+    <string name="or">OR</string>
+    <string name="prompt_password_confirm">Confirm Password</string>
+    <string name="sign_in_with_google">Continue with Google</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
+
+    <!-- Others -->
     <string name="app_name">Cycleasy</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
@@ -57,24 +80,6 @@
     <string name="exe_notification"> Your exercise is saved in <u>cycling history</u>.</string>
     <string name="gobackbuttondescription">gobackbutton</string>
 
-    <string name="title_activity_login">Log in</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="prompt_confirm_password">Reenter password</string>
-    <string name="action_sign_in">Login</string>
-    <string name="action_sign_in_short">Login</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >8 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="facebook_app_id">385355792132912</string>
-    <string name="fb_login_protocol_scheme">fb385355792132912</string>
-    <string name="link_signup">No account yet? Sign up</string>
-    <string name="action_sign_up">Sign up</string>
-    <string name="or">OR</string>
-    <string name="prompt_password_confirm">Confirm Password</string>
-    <string name="sign_in_with_google">Continue with Google</string>
-    <string name="continue_with_facebook">Continue with Facebook</string>
-    <string name="google_web_client">339230410853-i17d7f1gotce86gh7l782e5pijkt77rq.apps.googleusercontent.com</string>
+
 
 </resources>

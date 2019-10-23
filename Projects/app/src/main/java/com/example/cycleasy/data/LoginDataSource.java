@@ -15,4 +15,5 @@ public interface LoginDataSource {
     void loginWithFacebook(OnCallBack onCallBack);
     void loginWithGoogle(OnCallBack onCallBack);
     void onActivityResult(int requestCode, int resultCode, Intent data);
+    FirebaseUser getCurrentUser();
 }

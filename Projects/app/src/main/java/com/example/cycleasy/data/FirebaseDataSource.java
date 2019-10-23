@@ -29,6 +29,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import org.json.JSONObject;
@@ -56,7 +57,7 @@ public class FirebaseDataSource implements LoginDataSource{
         firebaseAuth = FirebaseAuth.getInstance();
         callbackManager = CallbackManager.Factory.create();
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("" + R.string.google_web_client)
+                .requestIdToken("" + R.string.google_web_client_id)
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(context, googleSignInOptions);
@@ -132,6 +133,11 @@ public class FirebaseDataSource implements LoginDataSource{
         } else {
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public FirebaseUser getCurrentUser() {
+        return firebaseAuth.getCurrentUser();
     }
 
     public void signupWithEmail(String email, String password, OnCallBack onCallBack) {

@@ -3,6 +3,8 @@ package com.example.cycleasy.data;
 import android.content.Context;
 import android.content.Intent;
 
+import com.google.firebase.auth.FirebaseUser;
+
 /**
  * Class that requests authentication and user information from the remote data source and
  * maintains an in-memory cache of login status and user credentials information.
@@ -46,6 +48,11 @@ public class UserRepository implements LoginDataSource{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         firebaseDataSource.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public FirebaseUser getCurrentUser() {
+        return firebaseDataSource.getCurrentUser();
     }
 
     public void signupWithEmail(String email, String password, OnCallBack onCallBack) {

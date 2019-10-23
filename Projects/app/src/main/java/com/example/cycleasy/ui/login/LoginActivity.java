@@ -90,13 +90,15 @@ public class LoginActivity extends AppCompatActivity {
 
                                 }
                             });
-                } else if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                    activityLoginBinding.email.setError("Enter valid email address");
-                } else if (password.isEmpty() || password.length() < 6) {
-                    if (password.isEmpty()) {
-                        activityLoginBinding.password.setError("Password cannot be blank");
-                    } else {
-                        activityLoginBinding.password.setError("password must have 6 or more characters");
+                } else {
+                    if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                        activityLoginBinding.email.setError("Enter valid email address");
+                    } else if (password.isEmpty() || password.length() < 6) {
+                        if (password.isEmpty()) {
+                            activityLoginBinding.password.setError("Password cannot be blank");
+                        } else {
+                            activityLoginBinding.password.setError("password must have 6 or more characters");
+                        }
                     }
                 }
             }
@@ -122,5 +124,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         loginViewModel.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser user = loginViewModel.getCurrentUser();
+        if (user != null) {
+            updateUI(user);
+        }
     }
 }
