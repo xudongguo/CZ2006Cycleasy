@@ -39,7 +39,7 @@
                 android:resource="@xml/searchable"/>
 
         </activity>
-        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".ui.login.SignupActivity"></activity>
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login"

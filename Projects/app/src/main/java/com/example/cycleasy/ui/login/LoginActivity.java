@@ -2,6 +2,7 @@ package com.example.cycleasy.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
@@ -11,8 +12,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.cycleasy.ContentActivity;
+import com.example.cycleasy.MainActivity;
 import com.example.cycleasy.R;
-import com.example.cycleasy.SignupActivity;
 import com.example.cycleasy.data.FirebaseDataSource;
 import com.example.cycleasy.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseUser;
@@ -75,9 +76,10 @@ public class LoginActivity extends AppCompatActivity {
         activityLoginBinding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String email = activityLoginBinding.email.getText().toString();
+                String password = activityLoginBinding.password.getText().toString();
                 if (loginViewModel.dataIsValid()) {
-                    loginViewModel.loginWithEmail(loginViewModel.getEmailAddress(),
-                            loginViewModel.getPassword(), new FirebaseDataSource.OnCallBack() {
+                    loginViewModel.loginWithEmail(email, password, new FirebaseDataSource.OnCallBack() {
                                 @Override
                                 public void onSuccessful(FirebaseUser user) {
                                     updateUI(user);
@@ -88,8 +90,14 @@ public class LoginActivity extends AppCompatActivity {
 
                                 }
                             });
-                } else {
-
+                } else if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    activityLoginBinding.email.setError("Enter valid email address");
+                } else if (password.isEmpty() || password.length() < 6) {
+                    if (password.isEmpty()) {
+                        activityLoginBinding.password.setError("Password cannot be blank");
+                    } else {
+                        activityLoginBinding.password.setError("password must have 6 or more characters");
+                    }
                 }
             }
         });
@@ -105,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
 
     void updateUI(FirebaseUser firebaseUser) {
         Toast.makeText(this, "Welcome " + firebaseUser.getDisplayName(), Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this, ContentActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

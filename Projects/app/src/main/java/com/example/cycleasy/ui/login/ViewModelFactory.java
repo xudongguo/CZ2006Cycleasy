@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
-import com.example.cycleasy.SignupActivity;
-import com.example.cycleasy.data.FirebaseDataSource;
 import com.example.cycleasy.data.UserRepository;
 
 /**

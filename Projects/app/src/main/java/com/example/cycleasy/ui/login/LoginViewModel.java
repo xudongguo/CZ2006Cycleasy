@@ -77,14 +77,4 @@ public class LoginViewModel extends ViewModel implements LoginDataSource {
 
         return true;
     }
-
-    @Bindable
-    public String getEmailAddress() {
-        return emailAddress.getValue();
-    }
-
-    @Bindable
-    public String getPassword() {
-        return password.getValue();
-    }
 }

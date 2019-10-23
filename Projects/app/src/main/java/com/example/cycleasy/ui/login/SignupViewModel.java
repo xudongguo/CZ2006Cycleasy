@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.cycleasy.data.LoginDataSource;
 import com.example.cycleasy.data.UserRepository;
 
-class SignupViewModel extends ViewModel {
+public class SignupViewModel extends ViewModel {
 
     private UserRepository userRepository;
 

@@ -75,5 +75,6 @@
     <string name="prompt_password_confirm">Confirm Password</string>
     <string name="sign_in_with_google">Continue with Google</string>
     <string name="continue_with_facebook">Continue with Facebook</string>
+    <string name="google_web_client">339230410853-i17d7f1gotce86gh7l782e5pijkt77rq.apps.googleusercontent.com</string>
 
 </resources>
