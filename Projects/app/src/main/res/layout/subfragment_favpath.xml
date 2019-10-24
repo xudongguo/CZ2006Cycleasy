@@ -30,7 +30,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginBottom="-3dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="5dp"
-            android:background="@color/colorPrimary">
+            android:background="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="NTU"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
                 <TextView
@@ -103,7 +103,7 @@
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="Jurong East"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
 
@@ -164,7 +164,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="5dp"
-            android:background="@color/colorPrimary">
+            android:background="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -178,7 +178,7 @@
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="NTU"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
                 <TextView
@@ -198,7 +198,7 @@
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="Jurong East"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
 
@@ -259,7 +259,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="5dp"
-            android:background="@color/colorPrimary">
+            android:background="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -273,7 +273,7 @@
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="NTU"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
                 <TextView
@@ -293,7 +293,7 @@
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="Jurong East"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
 
@@ -354,7 +354,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="5dp"
-            android:background="@color/colorPrimary">
+            android:background="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -368,7 +368,7 @@
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="NTU"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
                 <TextView
@@ -388,7 +388,7 @@
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="Jurong East"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
 
@@ -449,7 +449,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="5dp"
-            android:background="@color/colorPrimary">
+            android:background="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -463,7 +463,7 @@
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="NTU"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
                 <TextView
@@ -483,7 +483,7 @@
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="Jurong East"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
 

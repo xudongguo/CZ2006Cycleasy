@@ -1,70 +1,86 @@
 package com.example.cycleasy.ui.login;
 
-import androidx.lifecycle.LiveData;
+import android.content.Intent;
+import android.util.Patterns;
+import android.view.View;
+
+import androidx.databinding.Bindable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import android.util.Patterns;
+import com.example.cycleasy.data.LoginDataSource;
+import com.example.cycleasy.data.UserRepository;
+import com.google.firebase.auth.FirebaseUser;
 
-import com.example.cycleasy.data.LoginRepository;
-import com.example.cycleasy.data.Result;
-import com.example.cycleasy.data.model.LoggedInUser;
-import com.example.cycleasy.R;
+public class LoginViewModel extends ViewModel implements LoginDataSource {
 
-public class LoginViewModel extends ViewModel {
+    private static final String TAG = "LoginViewModel";
+    private UserRepository userRepository;
+    public MutableLiveData<String> emailAddress = new MutableLiveData<>();
+    public MutableLiveData<String> password = new MutableLiveData<>();
+    public MutableLiveData<Integer> loading;
 
-    private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
-    private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
-    private LoginRepository loginRepository;
+    public LoginViewModel(UserRepository userRepository) { this.userRepository = userRepository; }
 
-    LoginViewModel(LoginRepository loginRepository) {
-        this.loginRepository = loginRepository;
+    @Override
+    public void loginAnonymously(OnCallBack onCallBack) {
+        getLoading().setValue(View.VISIBLE);
+        userRepository.loginAnonymously(onCallBack);
+        getLoading().setValue(View.GONE);
     }
 
-    LiveData<LoginFormState> getLoginFormState() {
-        return loginFormState;
+    @Override
+    public void loginWithEmail(String email, String password, OnCallBack onCallBack) {
+        getLoading().setValue(View.VISIBLE);
+        userRepository.loginWithEmail(email, password, onCallBack);
+        getLoading().setValue(View.GONE);
     }
 
-    LiveData<LoginResult> getLoginResult() {
-        return loginResult;
+    @Override
+    public void loginWithFacebook(OnCallBack onCallBack) {
+        getLoading().setValue(View.VISIBLE);
+        userRepository.loginWithFacebook(onCallBack);
+        getLoading().setValue(View.GONE);
     }
 
-    public void login(String username, String password) {
-        // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
+    @Override
+    public void loginWithGoogle(OnCallBack onCallBack) {
+        getLoading().setValue(View.VISIBLE);
+        userRepository.loginWithGoogle(onCallBack);
+        getLoading().setValue(View.GONE);
+    }
 
-        if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
-        } else {
-            loginResult.setValue(new LoginResult(R.string.login_failed));
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        userRepository.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public FirebaseUser getCurrentUser() {
+        return userRepository.getCurrentUser();
+    }
+
+    private MutableLiveData<Integer> getLoading() {
+        if (loading == null) {
+            loading = new MutableLiveData<>();
+            loading.setValue(View.GONE);
         }
+        return loading;
     }
 
-    public void loginDataChanged(String username, String password) {
-        if (!isUserNameValid(username)) {
-            loginFormState.setValue(new LoginFormState(R.string.invalid_username, null));
-        } else if (!isPasswordValid(password)) {
-            loginFormState.setValue(new LoginFormState(null, R.string.invalid_password));
-        } else {
-            loginFormState.setValue(new LoginFormState(true));
-        }
-    }
-
-    // A placeholder username validation check
-    private boolean isUserNameValid(String username) {
-        if (username == null) {
+    public boolean dataIsValid() {
+        String email = emailAddress.getValue();
+        String pass = password.getValue();
+        if (email == null || email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            System.out.println(email);
             return false;
         }
-        if (username.contains("@")) {
-            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
-        } else {
-            return !username.trim().isEmpty();
-        }
-    }
 
-    // A placeholder password validation check
-    private boolean isPasswordValid(String password) {
-        return password != null && password.trim().length() > 5;
+        if (pass == null || pass.isEmpty() || pass.length() < 8) {
+            System.out.println(pass);
+            return false;
+        }
+
+        return true;
     }
 }
