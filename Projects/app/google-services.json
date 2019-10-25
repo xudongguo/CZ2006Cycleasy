@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "804417926066-dohji7h4vrrakbp2tgd74ir65gs3q7sp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cycleasy",
+            "certificate_hash": "ecd962ee6da9dc0fe8425d08a75276e08d6b5bb8"
+          }
+        },
+        {
           "client_id": "804417926066-bd1qrf9muek353dvdeb0ppjtaqv3jc9q.apps.googleusercontent.com",
           "client_type": 3
         }
