@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.cycleasy.ContentActivity;
 import com.example.cycleasy.MainActivity;
 import com.example.cycleasy.R;
 import com.example.cycleasy.data.FirebaseDataSource;
