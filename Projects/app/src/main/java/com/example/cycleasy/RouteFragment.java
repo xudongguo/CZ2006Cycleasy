@@ -104,7 +104,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
             if (!startpt.isEmpty() && !endpt.isEmpty()) {
                 topsearchbar.setText(startpt);
                 botsearchbar.setText(endpt);
-                geoLocate(endpt);
                 messagepending = false;
 
             }
