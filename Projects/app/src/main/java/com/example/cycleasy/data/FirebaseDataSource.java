@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.cycleasy.R;
-import com.example.cycleasy.data.model.LoggedInUser;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookException;
@@ -34,7 +33,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 /**

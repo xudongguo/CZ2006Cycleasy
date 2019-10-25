@@ -3,6 +3,7 @@ package com.example.cycleasy.ui.login;
 import android.util.Patterns;
 import android.view.View;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -15,7 +16,7 @@ public class SignupViewModel extends ViewModel {
     public MutableLiveData<String> email = new MutableLiveData<>();
     public MutableLiveData<String> password = new MutableLiveData<>();
     public MutableLiveData<String> passwordConfirm = new MutableLiveData<>();
-    public MutableLiveData<Integer> loading;
+    public ObservableBoolean loading;
 
     public SignupViewModel(UserRepository userRepository) { this.userRepository = userRepository; }
 
@@ -32,15 +33,15 @@ public class SignupViewModel extends ViewModel {
     }
 
     public void signupWithEmail(String email, String password, LoginDataSource.OnCallBack onCallBack) {
-        getLoading().setValue(View.VISIBLE);
+        getLoading().set(true);
         userRepository.signupWithEmail(email, password, onCallBack);
-        getLoading().setValue(View.GONE);
+        getLoading().set(false);
     }
 
-    private MutableLiveData<Integer> getLoading() {
+    private ObservableBoolean getLoading() {
         if (loading == null) {
-            loading = new MutableLiveData<>();
-            loading.setValue(View.GONE);
+            loading = new ObservableBoolean();
+            loading.set(false);
         }
         return loading;
     }

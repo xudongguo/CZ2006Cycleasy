@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.TabHost;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -85,7 +86,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
 
     @Nullable
     @Override
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_route, null);
         thiscontext = container.getContext();

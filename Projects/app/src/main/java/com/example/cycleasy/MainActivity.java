@@ -1,27 +1,15 @@
 package com.example.cycleasy;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.MenuItem;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.app.Dialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.TabHost;
-import android.widget.Toast;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 
 /**
  * Main activity to govern fragment transitions
@@ -104,7 +92,6 @@ public class MainActivity extends AppCompatActivity
                 public void run() { singleBackPressed = false;
                 }
             }, 2000);
-            super.onBackPressed();
         }
     }
 }

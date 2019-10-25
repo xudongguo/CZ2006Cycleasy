@@ -24,6 +24,9 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <style name="AppMaterialTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+    <style name="AppMaterialTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar" >
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
 
 </resources>

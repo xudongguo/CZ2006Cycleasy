@@ -4,7 +4,8 @@ import android.content.Intent;
 import android.util.Patterns;
 import android.view.View;
 
-import androidx.databinding.Bindable;
+import androidx.databinding.Observable;
+import androidx.databinding.ObservableBoolean;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -18,36 +19,36 @@ public class LoginViewModel extends ViewModel implements LoginDataSource {
     private UserRepository userRepository;
     public MutableLiveData<String> emailAddress = new MutableLiveData<>();
     public MutableLiveData<String> password = new MutableLiveData<>();
-    public MutableLiveData<Integer> loading;
+    public ObservableBoolean loading;
 
     public LoginViewModel(UserRepository userRepository) { this.userRepository = userRepository; }
 
     @Override
     public void loginAnonymously(OnCallBack onCallBack) {
-        getLoading().setValue(View.VISIBLE);
+        getLoading().set(true);
         userRepository.loginAnonymously(onCallBack);
-        getLoading().setValue(View.GONE);
+        getLoading().set(false);
     }
 
     @Override
     public void loginWithEmail(String email, String password, OnCallBack onCallBack) {
-        getLoading().setValue(View.VISIBLE);
+        getLoading().set(true);
         userRepository.loginWithEmail(email, password, onCallBack);
-        getLoading().setValue(View.GONE);
+        getLoading().set(false);
     }
 
     @Override
     public void loginWithFacebook(OnCallBack onCallBack) {
-        getLoading().setValue(View.VISIBLE);
+        getLoading().set(true);
         userRepository.loginWithFacebook(onCallBack);
-        getLoading().setValue(View.GONE);
+        getLoading().set(false);
     }
 
     @Override
     public void loginWithGoogle(OnCallBack onCallBack) {
-        getLoading().setValue(View.VISIBLE);
+        getLoading().set(true);
         userRepository.loginWithGoogle(onCallBack);
-        getLoading().setValue(View.GONE);
+        getLoading().set(false);
     }
 
     @Override
@@ -60,10 +61,10 @@ public class LoginViewModel extends ViewModel implements LoginDataSource {
         return userRepository.getCurrentUser();
     }
 
-    private MutableLiveData<Integer> getLoading() {
+    private ObservableBoolean getLoading() {
         if (loading == null) {
-            loading = new MutableLiveData<>();
-            loading.setValue(View.GONE);
+            loading = new ObservableBoolean();
+            loading.set(false);
         }
         return loading;
     }
