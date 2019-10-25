@@ -33,7 +33,6 @@ public class SignupActivity extends AppCompatActivity {
                 .get(SignupViewModel.class);
         activitySignupBinding.setViewModel(signupViewModel);
         activitySignupBinding.setLifecycleOwner(this);
-
         activitySignupBinding.signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,13 +47,34 @@ public class SignupActivity extends AppCompatActivity {
 
                         @Override
                         public void onError() {
-
-                        }
-
-                        public void onError(String errMsg) {
-
+                            Toast.makeText(getApplicationContext(), "Account already exists.", Toast.LENGTH_LONG).show();
                         }
                     });
+                } else {
+                    int error = signupViewModel.getError();
+                    String binary = String.format("%6s", Integer.toBinaryString(error)).replace(' ', '0');
+                    System.out.println(binary);
+                    if (error < 8) {
+                        if (binary.charAt(5) == '1') {
+                            activitySignupBinding.email.setError("Email cannot be empty.");
+                        }
+                        if (binary.charAt(4) == '1') {
+                            activitySignupBinding.password.setError("Password cannot be empty.");
+                        }
+                        if (binary.charAt(3) == '1') {
+                            activitySignupBinding.passwordConfirm.setError("Confirm password cannot be empty.");
+                        }
+                    } else {
+                        if (binary.charAt(2) == '1') {
+                            activitySignupBinding.email.setError("Enter valid email.");
+                        }
+                        if (binary.charAt(1) == '1') {
+                            activitySignupBinding.password.setError("Password must be >= 8 characters.");
+                        }
+                        if (binary.charAt(0) == '1') {
+                            activitySignupBinding.passwordConfirm.setError("Passwords do not match.");
+                        }
+                    }
                 }
             }
         });
@@ -63,6 +83,13 @@ public class SignupActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         Toast.makeText(this, "Welcome " + user.getDisplayName(), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
     }

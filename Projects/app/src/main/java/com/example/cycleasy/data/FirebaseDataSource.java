@@ -58,6 +58,7 @@ public class FirebaseDataSource implements LoginDataSource{
         callbackManager = CallbackManager.Factory.create();
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("" + R.string.google_web_client_id)
+                .requestServerAuthCode("" + R.string.google_web_client_id)
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(context, googleSignInOptions);
@@ -140,8 +141,21 @@ public class FirebaseDataSource implements LoginDataSource{
         return firebaseAuth.getCurrentUser();
     }
 
-    public void signupWithEmail(String email, String password, OnCallBack onCallBack) {
-
+    public void signupWithEmail(String email, String password, final OnCallBack onCallBack) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "signupWithEmail:success");
+                    sendMessage("Account creation successful.");
+                    onCallBack.onSuccessful(firebaseAuth.getCurrentUser());
+                } else {
+                    Log.w(TAG, "signupWithEmail:failure", task.getException());
+                    sendMessage("Account creation failed.");
+                    onCallBack.onError();
+                }
+            }
+        });
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {

@@ -43,7 +43,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxStrokeColor="@color/colorPrimary"
-            app:hintTextColor="@color/black">
+            app:hintTextColor="@color/colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
@@ -52,8 +52,10 @@
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:textColorHint="@color/white" />
-<!--                android:text="@={viewModel.emailAddress}"-->
+                android:textColorHint="@color/colorPrimary"
+                android:textColor="@color/black"
+                android:text="@={viewModel.email}"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,16 +71,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/email_input_text"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxStrokeColor="@color/white"
-            app:hintTextColor="@color/white">
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintTextColor="@color/colorPrimary"
+            app:endIconMode="password_toggle"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password"
-                android:inputType="textPassword" />
-<!--                android:text="@={viewModel.password}"-->
+                android:inputType="textPassword"
+                android:textColorHint="@color/colorPrimary"
+                android:textColor="@color/black"
+                android:text="@={viewModel.password}"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,8 +101,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password_input_text"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxStrokeColor="@color/white"
-            app:hintTextColor="@color/white">
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintTextColor="@color/colorPrimary"
+            app:endIconMode="password_toggle"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_confirm"
@@ -103,6 +112,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password_confirm"
                 android:inputType="textPassword"
+                android:textColorHint="@color/colorPrimary"
+                android:textColor="@color/black"
+                android:text="@={viewModel.passwordConfirm}"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -137,14 +149,13 @@
             android:layout_marginTop="64dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="64dp"
-            android:indeterminateTint="@color/white"
+            android:indeterminateTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/password_input_text"
             app:layout_constraintStart_toStartOf="@+id/password_input_text"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3" />
-<!--            android:visibility="@{viewModel.loading}" -->
-
+            app:layout_constraintVertical_bias="0.3"
+            android:visibility="@{viewModel.loading}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

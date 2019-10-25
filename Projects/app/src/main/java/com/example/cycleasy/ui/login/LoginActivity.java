@@ -2,6 +2,7 @@ package com.example.cycleasy.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private ActivityLoginBinding activityLoginBinding;
     private LoginViewModel loginViewModel;
+    private boolean singleBackPress = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -133,5 +135,22 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             updateUI(user);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (singleBackPress) {
+            super.onBackPressed();
+        }
+
+        singleBackPress = true;
+        Toast.makeText(this, "Press back again to exit.", Toast.LENGTH_LONG).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                singleBackPress = false;
+            }
+        }, 2000);
     }
 }

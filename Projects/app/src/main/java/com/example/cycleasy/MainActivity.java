@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
     private static int CONTENT_TIMEOUT = 3000;
+    private boolean singleBackPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,5 +87,24 @@ public class MainActivity extends AppCompatActivity
         return loadfragment(fragment);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0 ) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            if (singleBackPressed) {
+                super.onBackPressed();
+            }
 
+            singleBackPressed = true;
+            Toast.makeText(this, "Press back again to exit.", Toast.LENGTH_LONG).show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() { singleBackPressed = false;
+                }
+            }, 2000);
+            super.onBackPressed();
+        }
+    }
 }

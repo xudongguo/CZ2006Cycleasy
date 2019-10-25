@@ -53,6 +53,7 @@
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:textColorHint="@color/colorPrimary"
+                android:textColor="@color/colorPrimary"
                 android:text="@={viewModel.emailAddress}" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -79,6 +80,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password"
                 android:inputType="textPassword"
+                android:textColorHint="@color/colorPrimary"
+                android:textColor="@color/colorPrimary"
                 android:text="@={viewModel.password}" />
 
         </com.google.android.material.textfield.TextInputLayout>
