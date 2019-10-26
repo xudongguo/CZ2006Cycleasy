@@ -46,9 +46,11 @@
                     android:id="@+id/distnum"
                     android:layout_width="292dp"
                     android:layout_height="48dp"
-                    android:text="@string/_4_61km"
+                    android:text="@string/defaultdistance"
                     android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+
+                    android:textSize="30sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     app:layout_constraintBottom_toTopOf="@+id/imageView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.495"
@@ -118,7 +120,24 @@
                     app:layout_constraintTop_toBottomOf="@+id/distancetext"
                     app:srcCompat="@drawable/toparrow" />
 
-                <TextView
+                <Chronometer
+                    android:id="@+id/exe_chronometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="53dp"
+                    android:layout_marginRight="53dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintStart_toStartOf="@id/durationtext"
+                    app:layout_constraintTop_toBottomOf="@+id/durationtext"
+                    app:layout_constraintVertical_bias="0.0">
+
+                </Chronometer>
+                <!--TextView
                     android:id="@+id/timenumber"
                     android:layout_width="92dp"
                     android:layout_height="35dp"
@@ -136,25 +155,21 @@
                     app:layout_constraintHorizontal_bias="0.192"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/durationtext"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0" /-->
 
                 <TextView
                     android:id="@+id/speednumber"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginStart="70dp"
                     android:layout_height="35dp"
-                    android:layout_marginStart="53dp"
-                    android:layout_marginLeft="53dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="28dp"
-                    android:layout_marginRight="28dp"
                     android:layout_marginBottom="16dp"
-                    android:text="@string/_8_43_km_h"
+                    android:text="@string/defaultspeed"
+                    android:textSize="25sp"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.542"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintStart_toStartOf="@id/imageView"
                     app:layout_constraintTop_toBottomOf="@+id/speedtext"
                     app:layout_constraintVertical_bias="0.0" />
 
@@ -199,7 +214,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foregroundGravity="center"
-            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/colorPrimaryDark"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -224,7 +239,7 @@
             android:contentDescription="@string/stopexercise"
             android:focusable="true"
             android:foregroundGravity="center"
-            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/colorPrimaryDark"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

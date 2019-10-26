@@ -1,7 +1,11 @@
 package com.example.cycleasy;
 
 import android.Manifest;
+import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -9,10 +13,14 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,20 +63,26 @@ import java.util.List;
 /**
  * Fragment class for activities in exercise page
  */
-public class ExerciseFragment extends Fragment implements OnMapReadyCallback {
+public class ExerciseFragment extends Fragment implements OnMapReadyCallback{
     private static final String TAG = "ExerciseActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     //true if there is message sent from other fragment, false if otherwise
-    private boolean messagepending=false;
+    private boolean messagepending=false, bound=false, running=false;
+    private long pauseoffset;
+    private double  cyctime, cycdist=0,cycspeed=0;
     private MapView mMapView;
     private GoogleMap mMap;
-    ArrayList<LatLng> listPoints;
+    private ArrayList<LatLng> listPoints;
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     private FusedLocationProviderClient mFusedLocationProviderClient;
+    private ServiceConnection mServiceConnection;
+    private DistanceTraveledService mDistanceTraveledService;
     private Boolean mLocationPermissionGranted = true;
     private static final float DEFAULT_ZOOM = 15f;
-    Context thiscontext;
+    private Context thiscontext;
+    private TextView distancetxt,speedtxt;
+    private Chronometer mychrono;
     private String startpt,endpt;
 
     @Nullable
@@ -80,25 +94,70 @@ public class ExerciseFragment extends Fragment implements OnMapReadyCallback {
         FloatingActionButton startBut=(FloatingActionButton) view.findViewById(R.id.exe_startBut);
         FloatingActionButton stopBut=(FloatingActionButton)view.findViewById(R.id.exe_stopBut);
         FloatingActionButton mylocatBut=(FloatingActionButton)view.findViewById(R.id.exe_loactionBut);
+        distancetxt=(TextView)view.findViewById(R.id.distnum);
+        speedtxt=(TextView)view.findViewById(R.id.speednumber);
+        mychrono=(Chronometer)view.findViewById(R.id.exe_chronometer);
         mMapView = (MapView) view.findViewById(R.id.exe_mapview);
 
+
+        //Service connection for distance tracker
+        mServiceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                DistanceTraveledService.DistanceTravelBinder distanceTravelBinder = (DistanceTraveledService.DistanceTravelBinder)service;
+                mDistanceTraveledService = distanceTravelBinder.getBinder();
+                bound = true;
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                bound = false;
+            }
+        };
+
+        //Start exercise button activity
         startBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO for timer and tracker when start button is clicked
+                //TODO for tracker when start button is clicked\
+                if (!running){
+                    mychrono.setBase(SystemClock.elapsedRealtime()-pauseoffset);
+                    mychrono.start();
+                    displayMetrics();
+                    running=true;}
+                else{
+                    mychrono.stop();
+                    pauseoffset=SystemClock.elapsedRealtime()-mychrono.getBase();
+                    running=false;
             }
-        });
 
+        }}
+        );
+
+        //stop exercise button activity
         stopBut.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                //TODO for timer and tracker when stop button is long clicked
-                //show exercise report in exercise report fragment
+                //TODO for tracker when stop button is long clicked
+
+                //send cycling metrics to exercise report fragment for display
+                Bundle bundle=new Bundle();
+                bundle.putString("cycling distance", String.format("%.2fKM",cycdist));
+                bundle.putString("cycling time", mychrono.getText().toString());
+                bundle.putString("cycling speed",String.format("%.2fKM/H",cycspeed));
                 FragmentTransaction transaction=getFragmentManager().beginTransaction();
                 ExeReportFragment reportFragment=new ExeReportFragment();
+                reportFragment.setArguments(bundle);
                 transaction.setCustomAnimations(R.anim.slide_in_bott, R.anim.slide_out_bott);
                 transaction.addToBackStack(null);
                 transaction.replace(R.id.fragment_container, reportFragment, "EXERCISE REPORT").commit();
+
+                //reset the metrics displayed
+                distancetxt.setText(getResources().getString(R.string.defaultdistance));
+                speedtxt.setText(getResources().getString(R.string.defaultspeed));
+                mychrono.setBase(SystemClock.elapsedRealtime());
+                pauseoffset=0;
+
                 return false;
             }
         });
@@ -119,6 +178,30 @@ public class ExerciseFragment extends Fragment implements OnMapReadyCallback {
 
         return view;
     }
+
+    //display ditance travelled
+    private void displayMetrics() {
+            final Handler handler = new Handler();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if(mDistanceTraveledService != null){
+                        cycdist = mDistanceTraveledService.getDistanceTraveled()/100000;
+                    }
+                    cyctime=(SystemClock.elapsedRealtime()-mychrono.getBase())/1000;
+                    cycspeed=cycdist/(cyctime/3600);
+                    speedtxt.setText(String.format("%.2fKM/H",cycspeed));
+                    distancetxt.setText(String.format("%.2fKM",cycdist));
+                    handler.postDelayed(this, 1000);
+                    Log.d("time", String.valueOf(cyctime)+"S");
+                    Log.d("displaydistance", String.valueOf(cycdist)+"KM");
+                    Log.d("speed",String.valueOf(cycspeed)+"KM/H");
+
+
+                }
+            });
+
+        }
 
     public boolean isServicesOK() {
         Log.d(TAG, "isServiceOK: checking google services version");
@@ -164,12 +247,19 @@ public class ExerciseFragment extends Fragment implements OnMapReadyCallback {
     public void onStart() {
         super.onStart();
         mMapView.onStart();
+        Intent intent = new Intent (thiscontext, DistanceTraveledService.class);
+        thiscontext.bindService(intent,mServiceConnection,Context.BIND_AUTO_CREATE);
     }
+
 
     @Override
     public void onStop() {
         super.onStop();
         mMapView.onStop();
+        if(bound){
+            thiscontext.unbindService(mServiceConnection);
+           bound = false;
+        }
     }
 
 

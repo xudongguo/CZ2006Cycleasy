@@ -59,9 +59,9 @@
     <string name="hi_username">Hi! Username</string>
     <string name="toparrow">toparrow</string>
     <string name="mylocation">mylocation</string>
-    <string name="_4_61km">4.61KM</string>
+    <string name="defaultdistance">0.00KM</string>
     <string name="_00_30_22">00:30:22</string>
-    <string name="_8_43_km_h">8.43 KM/H</string>
+    <string name="defaultspeed">0.00KM/H</string>
     <string name="searchtitle">searchtitle</string>
     <string name="find_rack_button">find rack Button</string>
     <string name="find">FIND</string>
