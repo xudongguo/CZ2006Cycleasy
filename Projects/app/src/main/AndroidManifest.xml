@@ -86,7 +86,7 @@
 
         <provider android:name=".Search.SearchSuggestionsProvider"
             android:authorities="com.example.cycleasy.Search.SearchSuggestionsProvider" />
-        <activity android:name=".MainActivity" android:theme="@style/AppMaterialTheme"/>
+        <activity android:name=".MainActivity"/>
     </application>
 
 </manifest>

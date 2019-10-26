@@ -34,6 +34,7 @@
             android:layout_height="match_parent"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            android:background="@color/colorPrimary"
 
             app:toolbarId="@+id/racks_searchbar">
 

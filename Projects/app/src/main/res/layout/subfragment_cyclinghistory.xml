@@ -68,6 +68,7 @@
                 android:id="@+id/dateBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
                 android:text="12/10/2019" />
 
             <LinearLayout
@@ -199,7 +200,8 @@
                 android:id="@+id/dateBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="12/10/2019" />
+                android:text="12/10/2019"
+                android:background="@color/colorPrimary"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -330,7 +332,8 @@
                 android:id="@+id/dateBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="12/10/2019" />
+                android:text="12/10/2019"
+                android:background="@color/colorPrimary"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -461,7 +464,8 @@
                 android:id="@+id/dateBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="12/10/2019" />
+                android:text="12/10/2019"
+                android:background="@color/colorPrimary"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -592,7 +596,8 @@
                 android:id="@+id/dateBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="12/10/2019" />
+                android:text="12/10/2019"
+                android:background="@color/colorPrimary"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

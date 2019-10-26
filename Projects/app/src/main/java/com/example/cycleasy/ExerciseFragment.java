@@ -139,7 +139,6 @@ public class ExerciseFragment extends Fragment implements OnMapReadyCallback{
             @Override
             public boolean onLongClick(View view) {
                 //TODO for tracker when stop button is long clicked
-
                 //send cycling metrics to exercise report fragment for display
                 Bundle bundle=new Bundle();
                 bundle.putString("cycling distance", String.format("%.2fKM",cycdist));
@@ -172,6 +171,7 @@ public class ExerciseFragment extends Fragment implements OnMapReadyCallback{
         // SearchableActivity myActivity=(SearchableActivity)getActivity();
         // searchbar.setText(myActivity.getHintText());
 
+        //initiate google map
         initGoogleMap(savedInstanceState);
         mMapView.getMapAsync(this);
 
@@ -179,7 +179,7 @@ public class ExerciseFragment extends Fragment implements OnMapReadyCallback{
         return view;
     }
 
-    //display ditance travelled
+    //display exercise metrics
     private void displayMetrics() {
             final Handler handler = new Handler();
             handler.post(new Runnable() {
@@ -249,6 +249,7 @@ public class ExerciseFragment extends Fragment implements OnMapReadyCallback{
         mMapView.onStart();
         Intent intent = new Intent (thiscontext, DistanceTraveledService.class);
         thiscontext.bindService(intent,mServiceConnection,Context.BIND_AUTO_CREATE);
+        Log.d("onStart", "binded");
     }
 
 
@@ -258,6 +259,7 @@ public class ExerciseFragment extends Fragment implements OnMapReadyCallback{
         mMapView.onStop();
         if(bound){
             thiscontext.unbindService(mServiceConnection);
+            Log.d("onStop", "unbind");
            bound = false;
         }
     }

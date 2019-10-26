@@ -69,14 +69,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/favpath"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            <Button
+                android:id="@+id/favpathbtn"
                 android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_marginBottom="5dp"
                 android:background="@color/white"
-                android:backgroundTint="@color/white"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:drawableStart="@drawable/ic_favorite"
                 android:drawableLeft="@drawable/ic_favorite"
                 android:drawableEnd="@drawable/rightarrowlight"
@@ -90,20 +89,19 @@
                 app:icon="@drawable/ic_favorite"
                 app:iconPadding="24dp"
                 app:iconTint="@null"
-                app:layout_constraintBottom_toTopOf="@+id/cychistory"
+                app:layout_constraintBottom_toTopOf="@+id/cychistorybtn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/cychistory"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            <Button
+                android:id="@+id/cychistorybtn"
                 android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_marginBottom="5dp"
                 android:background="@color/white"
-                android:backgroundTint="@color/white"
+                style="@style/Widget.AppCompat.Button.Colored"
                 app:icon="@drawable/ic_history"
                 app:iconPadding="24dp"
                 app:iconTint="@null"
@@ -116,29 +114,30 @@
                 android:paddingLeft="5dp"
                 android:text="@string/your_cycling_history"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                app:layout_constraintBottom_toTopOf="@+id/editprofile"
+                app:layout_constraintBottom_toTopOf="@+id/editprofilebtn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/favpath" />
+                app:layout_constraintTop_toBottomOf="@+id/favpathbtn" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/editprofilebtn"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                android:layout_width="0dp"
-                android:layout_height="110dp"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
-                app:icon="@drawable/ic_resume"
-                app:iconPadding="24dp"
-                app:iconTint="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cychistory"
-                android:text="@string/your_profile"
-                android:gravity="center|start"
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"/>
-
+            <Button
+            android:id="@+id/editprofilebtn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="110dp"
+            android:background="@color/white"
+            android:drawableRight="@drawable/rightarrowlight"
+            android:drawableLeft="@drawable/ic_resume"
+            android:drawableStart="@drawable/ic_resume"
+            android:drawableEnd="@drawable/rightarrowlight"
+            android:text="@string/your_profile"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:paddingLeft="10dp"
+            android:gravity="center|start"
+            android:drawablePadding="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cychistorybtn"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

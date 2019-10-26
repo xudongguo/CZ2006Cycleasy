@@ -17,10 +17,38 @@ import com.google.firebase.auth.FirebaseAuth;
 /**
  * Fragment class for activities in me page
  */
-public class MeFragment extends Fragment implements View.OnClickListener {
+public class MeFragment extends Fragment{
 
-    Button profileButton;
     private Fragment fragment;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_me, null);
+        Button cychisButton =view.findViewById(R.id.cychistorybtn);
+        Button profileButton = view.findViewById(R.id.editprofilebtn);
+        Button favpathButton =view.findViewById(R.id.favpathbtn);
+
+        cychisButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadfragment(new subFragment_cychis());
+            }
+        });
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadfragment(new subFragment_profile());
+            }
+        });
+        favpathButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadfragment(new subFragment_favpath());
+            }
+        });
+        return view;
+    }
 
     /**
      * To load a particular fragment
@@ -29,7 +57,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
      */
     private boolean loadfragment(Fragment fragment) {
         if (fragment != null) {
-            getActivity().getSupportFragmentManager()
+            getFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .addToBackStack(null)
@@ -39,65 +67,5 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         return false;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_me, null);
-        profileButton = view.findViewById(R.id.editprofilebtn);
-        InitView();
-        return view;
-    }
-
-    private void InitView() {
-        profileButton.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.editprofilebtn:
-                loadfragment(new profile_subFragment());
-                break;
-        }
-    }
-
-    public static class favpath_subFragment extends Fragment{
-        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_favpath, null);
-        }
-    }
-
-    public static class profile_subFragment extends Fragment {
-
-        Button logoutButton;
-
-        @Nullable
-        @Override
-        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.subfragment_profile, null);
-            logoutButton = view.findViewById(R.id.logoutBtn);
-            initView();
-            return view;
-        }
-
-        private void initView() {
-            logoutButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
-                }
-            });
-        }
-
-    }
-
-    public static class cyclinghistory_subFragment {
-        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_cyclinghistory, null);
-        }
-    }
 }
 
