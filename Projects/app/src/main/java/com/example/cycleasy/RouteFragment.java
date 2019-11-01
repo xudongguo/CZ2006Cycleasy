@@ -1,16 +1,21 @@
 package com.example.cycleasy;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.LocalSocketAddress;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,10 +73,11 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
     //true if there is message sent from other fragment, false if otherwise
     private boolean messagepending = false;
     private MapView mMapView;
-    private GoogleMap mMap;
+    private static GoogleMap mMap;
     ArrayList<LatLng> listPoints = new ArrayList<>();
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private Boolean mLocationPermissionGranted = false;
+
+    private Boolean mLocationPermissionGranted = false, gps_enabled=false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -80,7 +86,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
     private static final int ERROR_DIALOG_REQUEST = 9001;
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     private static final float DEFAULT_ZOOM = 15f;
-    Context thiscontext;
+    private static Context thiscontext;
     private String startpt, endpt;
     private Address startadd, endadd;
 
@@ -93,9 +99,15 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         final TextView botsearchbar = (TextView) view.findViewById((R.id.route_botsearchbar));
         mMapView = (MapView) view.findViewById(R.id.route_mapview);
         getLocationPermission();
+        //check if location is enabled
+        LocationManager lm = (LocationManager)thiscontext.getSystemService(Context.LOCATION_SERVICE);
+        gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (!gps_enabled) {
+            //prompt user to enable gps in settings
+            showSettingsAlert();
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        }
         initGoogleMap(savedInstanceState);
-        mMapView.getMapAsync(this);
-
         //if there is message passed from subfragments, set the search information based on the message.
         if (messagepending) {
             Log.d(TAG, "onmessagepending: message pending");
@@ -293,26 +305,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
-    public boolean isServicesOK() {
-        Log.d(TAG, "isServiceOK: checking google services version");
-
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getContext());
-
-        if (available == ConnectionResult.SUCCESS) {
-            //fine
-            Log.d(TAG, "isServicesOK:");
-            return true;
-        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
-            //
-            Log.d(TAG, "isServicesOK: ");
-            //Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(getContext(), available, ERROR_DIALOG_REQUEST);
-            //dialog.show();
-        } else {
-            Toast.makeText(getContext(), "You can't make map requests", Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }
-
     @Override
 
     public void onSaveInstanceState(Bundle outState) {
@@ -386,7 +378,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
 
-        if (mLocationPermissionGranted) {
+        if (mLocationPermissionGranted  && gps_enabled) {
             getDeviceLocation();
 
             if (ActivityCompat.checkSelfPermission(thiscontext, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -534,6 +526,8 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         // this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
+
+
     /**
      * Get the location of this device
      */
@@ -577,18 +571,25 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
 
         if (ContextCompat.checkSelfPermission(thiscontext,
                 FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "haspermission1: getting location permissions");
             if (ContextCompat.checkSelfPermission(thiscontext,
                     COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "haspermission2: getting location permissions");
                 mLocationPermissionGranted = true;
+
             } else {
                 requestPermissions(
+
                         permissions,
                         LOCATION_PERMISSION_REQUEST_CODE);
+                Log.d(TAG, "nopermission1: getting location permissions");
             }
         } else {
             requestPermissions(
+
                     permissions,
                     LOCATION_PERMISSION_REQUEST_CODE);
+            Log.d(TAG, "nopermission2: getting location permissions");
         }
     }
 
@@ -596,7 +597,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, @NonNull int[] grantResults) {
         Log.d(TAG, "onRequestPermissionsResult: called.");
         //super.onRequestPermissionsResult(requestCode,permissions,grantResults);
-        mLocationPermissionGranted = false;
 
         switch (requestCode) {
             case LOCATION_PERMISSION_REQUEST_CODE: {
@@ -605,20 +605,88 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
                         if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                             mLocationPermissionGranted = false;
                             Log.d(TAG, "onRequestPermissionsResult: permission failed");
+                            showExitReasonDialogue();
                             return;
                         }
                     }
                     Log.d(TAG, "onRequestPermissionsResult: permission granted");
+
                     mLocationPermissionGranted = true;
                     //initialize the map
                 }
+
+                else {
+                    showExitReasonDialogue();
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+
+
             }
         }
     }
 
+    private void showSettingsAlert(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(thiscontext,R.style.AlertDialogTheme);
+        // Setting Dialog Title
+        alertDialog.setTitle("GPS not enabled");
+        // Setting Dialog Message
+        alertDialog.setMessage("To continue using this application,  do you want to enable GPS?\n" +
+                " Cancel will exit the application");
+        // Setting Icon to Dialog
+        //alertDialog.setIcon(R.drawable.delete);
 
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                thiscontext.startActivity(intent);
+            }
+        });
+
+        // on pressing cancel button
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                System.exit(0);
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
+    private void showExitReasonDialogue(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(thiscontext,R.style.AlertDialogTheme);
+
+        // Setting Dialog Title
+        alertDialog.setTitle("GPS permission not granted");
+
+        // Setting Dialog Message
+        alertDialog.setMessage("To continue using this application, do you want to grant GPS permission?");
+
+        // Setting Icon to Dialog
+        //alertDialog.setIcon(R.drawable.delete);
+
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which) {
+                getLocationPermission();
+            }
+        });
+
+        // on pressing cancel button
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                System.exit(0);
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
     // get direction, using httpurlconnection
-    private String requestDirection(String reqUrl) throws IOException {
+    private static String requestDirection(String reqUrl) throws IOException {
         String responseString = "";
         InputStream inputStream = null;
         HttpURLConnection httpURLConnection = null;
@@ -654,7 +722,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
     }
 
     // create a AsyncTask to call request direction
-    public class TaskRequestDirections extends AsyncTask<String, Void, String> {
+    public static class TaskRequestDirections extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
             String responseString = "";
@@ -677,7 +745,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
+    public static class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
 
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
@@ -697,7 +765,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            Toast.makeText(thiscontext, "finding", Toast.LENGTH_LONG).show();
         }
 
         @Override

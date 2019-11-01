@@ -4,7 +4,11 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -12,12 +16,14 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Xml;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +33,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.loader.content.Loader;
 
 import com.daasuu.bl.ArrowDirection;
 import com.daasuu.bl.BubbleLayout;
@@ -42,6 +49,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -50,8 +58,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -62,6 +72,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
@@ -71,8 +83,8 @@ import static android.app.Activity.RESULT_OK;
 public class RacksFragment extends Fragment implements OnMapReadyCallback {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
-    ArrayList<String> list = new ArrayList<String>();
-    ArrayAdapter adapter;
+    private ArrayList<String> list = new ArrayList<String>();
+    private ArrayAdapter adapter;
     private static final String TAG = "RacksActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
@@ -80,13 +92,17 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
     private boolean messagepending=false;
     private MapView mMapView;
     private GoogleMap mMap;
-    ArrayList<LatLng> listPoints;
+    private String startpt,endpt;
+    private Location targetLocation=new Location(""), currentLocation;
+    private Address currentadd;
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Boolean mLocationPermissionGranted = true;
+    private Boolean isParsed=false;
     private static final float DEFAULT_ZOOM = 15f;
-    Context thiscontext;
-    private String startpt,endpt;
+    private ArrayList<String> rackinfo;
+    private Context thiscontext;
+
 
 
 
@@ -95,27 +111,21 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
         View view = inflater.inflate(R.layout.fragment_racks, null);
         thiscontext = container.getContext();
         final TextView searchbar = (TextView) view.findViewById((R.id.racks_searchbar));
-        final ImageView rackbutton = (ImageView) view.findViewById(R.id.racks_racklocation);
         mMapView = (MapView) view.findViewById(R.id.racks_mapview);
 
         //show rack information bubble popup
         final BubbleLayout bubbleLayout = (BubbleLayout) LayoutInflater.from(getContext()).inflate(R.layout.bubblelayout, null);
         final PopupWindow popupWindow = BubblePopupHelper.create(getContext(), bubbleLayout);
         final FloatingActionButton mylocatBUT=(FloatingActionButton) view.findViewById(R.id.racks_locationBut);
+        final FloatingActionButton findbutton=view.findViewById(R.id.racks_findbutton);
 
-        rackbutton.setOnClickListener(new View.OnClickListener() {
+
+        findbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                int[] location = new int[2];
-
-                bubbleLayout.setArrowDirection(ArrowDirection.BOTTOM);
-                popupWindow.showAsDropDown(rackbutton,50,-250,Gravity.CENTER);
-                //view.getLocationInWindow(location);
-                //popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, location[0], view.getHeight() + location[1]);
+                displayRackMarker();
             }
         });
-
 
         //Call SearchableActivity to handle the search
         searchbar.setOnClickListener(new View.OnClickListener() {
@@ -139,13 +149,37 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
         });
         // SearchableActivity myActivity=(SearchableActivity)getActivity();
         // searchbar.setText(myActivity.getHintText());
+        if (!isParsed){
+            //get the ita-bicycle-rack-kml file and parse the rack info
+            rackinfo=getRackInfo();
+            isParsed=true;}
 
         initGoogleMap(savedInstanceState);
-        mMapView.getMapAsync(this);
+        //mMapView.getMapAsync(this);
+
 
 
         return view;
 
+    }
+
+
+
+    private ArrayList<String> getRackInfo(){
+
+        InputStream rackinfoStream=thiscontext.getResources().openRawResource(R.raw.ltarackkml);
+        ArrayList<String> rackinfo=new ArrayList<>();
+        XmlParser rackParser=new XmlParser();
+        try {
+            rackinfo=rackParser.parseFile(rackinfoStream);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
+        return rackinfo;
     }
 
     /**
@@ -163,7 +197,14 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
                 String displaytxt = data.getExtras().getString("query");
                 TextView searchbar = (TextView) getView().findViewById(R.id.racks_searchbar);
                 searchbar.setText(displaytxt);
-                geoLocate(displaytxt);
+                currentadd=geoLocate(displaytxt);
+                if(currentadd!=null)
+                //set target location address
+                {targetLocation.setLatitude(currentadd.getLatitude());
+                targetLocation.setLongitude(currentadd.getLongitude());}
+                else
+                    targetLocation=currentLocation;
+
             }
             else if (resultCode== RESULT_CANCELED){
                 //if activity closed abnormally
@@ -171,25 +212,6 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    public boolean isServicesOK() {
-        Log.d(TAG, "isServiceOK: checking google services version");
-
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getContext());
-
-        if (available == ConnectionResult.SUCCESS) {
-            //fine
-            Log.d(TAG, "isServicesOK:");
-            return true;
-        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
-            //
-            Log.d(TAG, "isServicesOK: ");
-            //Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(getContext(), available, ERROR_DIALOG_REQUEST);
-            //dialog.show();
-        } else {
-            Toast.makeText(getContext(), "You can't make map requests", Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }
 
     @Override
 
@@ -277,85 +299,76 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
 
             //Fx: find a location.
 
-            //Fx: find bicycling directions between 2 points
-            mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-                @Override
-                public void onMapLongClick(LatLng latLng) {
-                    //Reset marker when already 2
-                    if (listPoints.size() == 2) {
-                        listPoints.clear();
-                        mMap.clear();
-                    }
-                    //Save first point selected
-                    listPoints.add(latLng);
-                    //Create marker
-                    MarkerOptions markerOptions = new MarkerOptions();
-                    markerOptions.position(latLng);
 
-                    if (listPoints.size() == 1) {
-                        //Add first marker to the map
-                        Log.d(TAG, "onMapLongClick: adding first point");
-                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                    } else {
-                        //Add second market to the map
-                        Log.d(TAG, "onMapLongClick: adding second point");
-                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                    }
-                    mMap.addMarker(markerOptions);
-                    //request get direction code bellow
-                    if (listPoints.size() == 2) {
-                        Log.d(TAG, "onMapLongClick: Searching now");
-                        String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
-                        RacksFragment.TaskRequestDirections taskRequestDirections = new RacksFragment.TaskRequestDirections();
-                        taskRequestDirections.execute(url);
-                    }
+            mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+                @Override
+                public View getInfoWindow(Marker arg0) {
+                    return null;
+                }
+
+                @Override
+                public View getInfoContents(Marker marker) {
+
+                    LinearLayout info = new LinearLayout(thiscontext);
+                    info.setOrientation(LinearLayout.VERTICAL);
+
+                    TextView title = new TextView(thiscontext);
+                    title.setTextColor(Color.WHITE);
+                    title.setGravity(Gravity.CENTER);
+                    title.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    title.setTypeface(null, Typeface.BOLD);
+                    title.setText(marker.getTitle());
+
+                    TextView snippet = new TextView(thiscontext);
+                    snippet.setTextColor(Color.GRAY);
+                    //snippet.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    snippet.setText(marker.getSnippet());
+
+                    info.addView(title);
+                    info.addView(snippet);
+
+                    return info;
                 }
             });
         }
     }
-    // get request about starting and ending points and convert to url, and use url to request from google map api
-    private String getRequestUrl(LatLng origin,LatLng dest){
-        // value of origin
-        String str_org = "origin="+origin.latitude+","+origin.longitude;
-        // value of destination
-        String str_dest = "destination="+dest.latitude+","+dest.longitude;
-        // set value anble the sensor
-        //String sensor = "sensor=false";
-        // Mode for finding direction
-        String mode = "mode=bicycling";
-        // Build the full param
-        String api_key = "&key=AIzaSyDW_vO8Zofe8at0AwHE-91_Pa1ZQFTijr8";
+    //display markers for racks
+    public void displayRackMarker(){
+       //create an location object for target address using currentadd
 
-        String param = str_org +"&"+str_dest+"&"+mode+api_key;
-        // Output format
-        String output = "json";
-        // Create url to request
-        String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+param;
-        Log.d(TAG, "getRequestUrl: "+url);
-        return url;
+        for (int temp = 0; temp < rackinfo.size(); temp++) {
+            String[] tempinfo = rackinfo.get(temp).split("[|]");
+            double racklat = Double.valueOf(tempinfo[0]);
+            double racklong = Double.valueOf(tempinfo[1]);
+            Location racklocation=new Location("");
+            racklocation.setLatitude(racklat);
+            racklocation.setLongitude(racklong);
+
+            //find the distance between current location and rack location
+            if(racklocation.distanceTo(targetLocation)<500)
+            {
+                String racktype = tempinfo[2];
+                String rackcount = tempinfo[3];
+                String issheltered = tempinfo[4];
+
+                BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.rackiconbitmap);
+                Bitmap b = bitmapdraw.getBitmap();
+                Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
+                //get lat lng of rack
+                LatLng rackpos = new LatLng(racklat, racklong);
+                Marker rackMarker = mMap.addMarker(new MarkerOptions()
+
+                        .position(rackpos)
+                        .title("rack" + temp)
+                        .snippet("type: " + racktype + " deck" + "\n" + "number of racks: " + rackcount + "\n" + "sheltered: " + issheltered)
+                        //.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.icon_racklocation)))
+                        .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+                );
+            }
+        }
+
     }
-
-//    private void init(String query){
-//        Log.d(TAG, "init: initializing");
-//
-//        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent keyEvent) {
-//                if(actionId == EditorInfo.IME_ACTION_SEARCH
-//                        ||actionId == EditorInfo.IME_ACTION_DONE
-//                        ||keyEvent.getAction() == KeyEvent.ACTION_DOWN
-//                        ||keyEvent.getAction() == KeyEvent.KEYCODE_ENTER){
-//
-//                    //execute our method for searching
-//                    geoLocate(query);
-//                    hideSoftKeyboard();
-//                }
-//                return false;
-//            }
-//        });
-//    }
-
-
     /**
      * locating a geographical location from a location name of type String, and move the camera to that location
      * @param query query text containing the name of the location
@@ -430,7 +443,7 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful()){
                             Log.d(TAG, "onComplete: foundLocation!");
-                            Location currentLocation = (Location) task.getResult();
+                            currentLocation = (Location) task.getResult();
                             moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),
                                     DEFAULT_ZOOM,
                                     "My Location");
@@ -446,113 +459,6 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    // get direction, using httpurlconnection
-    private String requestDirection(String reqUrl) throws IOException {
-        String responseString = "";
-        InputStream inputStream = null;
-        HttpURLConnection httpURLConnection = null;
-        try{
-            URL url = new URL(reqUrl);
-            httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.connect();
 
-            //Get the response result
-            inputStream = httpURLConnection.getInputStream();
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-            StringBuffer stringBuffer = new StringBuffer();
-            String line = "";
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuffer.append(line);
-            }
-
-            responseString = stringBuffer.toString();
-            bufferedReader.close();
-            inputStreamReader.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-            httpURLConnection.disconnect();
-        }
-        return responseString;
-    }
-    // create a AsyncTask to call request direction
-    public class TaskRequestDirections extends AsyncTask<String,Void,String> {
-        @Override
-        protected String doInBackground(String... strings){
-            String responseString = "";
-            try {
-                responseString = requestDirection(strings[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return responseString;
-        }
-
-        @Override
-        protected void onPostExecute(String s){
-            super.onPostExecute(s);
-            //Parse json here
-            Log.d(TAG, "onPostExecute: calling taskparser");
-            RacksFragment.TaskParser taskParser = new RacksFragment.TaskParser();
-            taskParser.execute(s);
-
-        }
-    }
-
-    public class TaskParser extends AsyncTask<String,Void,List<List<HashMap<String,String>>>> {
-
-        @Override
-        protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
-            Log.d(TAG, "doInBackground: calling json");
-            JSONObject jsonObject = null;
-            List<List<HashMap<String, String>>> routes = null;
-            try {
-                jsonObject = new JSONObject(strings[0]);
-                DirectionParser directionParser = new DirectionParser();
-                routes = directionParser.parse(jsonObject);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return routes;
-        }
-
-        @Override
-        protected void onPostExecute(List<List<HashMap<String, String>>> lists) {
-            //super.onPostExecute(lists);
-            // Get list route and display it into the map
-            ArrayList points = null;
-
-            PolylineOptions polylineOptions = null;
-
-            for (List<HashMap<String, String>> path : lists) {
-                points = new ArrayList();
-                polylineOptions = new PolylineOptions();
-
-                for (HashMap<String, String> point : path) {
-                    double lat = Double.parseDouble(point.get("lat"));
-                    double lon = Double.parseDouble(point.get("lon"));
-                    Log.d(TAG, "onPostExecute: " + lat + " " + lon);
-                    points.add(new LatLng(lat, lon));
-                }
-
-                Log.d(TAG, "onPostExecute: drawing line now");
-                polylineOptions.addAll(points);
-                polylineOptions.width(15);
-                polylineOptions.color(Color.BLUE);
-                polylineOptions.geodesic(true);
-            }
-            if (polylineOptions != null) {
-                mMap.addPolyline(polylineOptions);
-            } else {
-                Log.d(TAG, "onPostExecute: Direction not found!");
-                Toast.makeText(getContext(), "Direction not found", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 }

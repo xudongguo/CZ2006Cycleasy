@@ -79,7 +79,7 @@
         android:orientation="vertical">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/findbutton"
+            android:id="@+id/racks_findbutton"
             android:layout_width="83dp"
             android:layout_height="81dp"
             android:layout_gravity="center"
@@ -105,18 +105,6 @@
         tools:layout_editor_absoluteY="514dp"
         android:focusable="true" />
 
-
-    <ImageView
-        android:id="@+id/racks_racklocation"
-        android:layout_marginTop="350dp"
-        android:layout_marginLeft="150dp"
-        android:layout_marginStart="150dp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:contentDescription="@string/racklocation"
-        android:clickable="true"
-        android:focusable="true"
-        app:srcCompat="@drawable/icon_racklocation" />
 
 
 </FrameLayout>
