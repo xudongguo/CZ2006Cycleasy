@@ -336,7 +336,7 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
     //display markers for racks
     public void displayRackMarker(){
        //create an location object for target address using currentadd
-
+        int totalcount=0;
         for (int temp = 0; temp < rackinfo.size(); temp++) {
             String[] tempinfo = rackinfo.get(temp).split("[|]");
             double racklat = Double.valueOf(tempinfo[0]);
@@ -365,9 +365,12 @@ public class RacksFragment extends Fragment implements OnMapReadyCallback {
                         //.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.icon_racklocation)))
                         .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
                 );
+                totalcount++;
             }
         }
-
+        //no racks around the location
+        if(totalcount==0)
+        Toast.makeText(thiscontext,"no bike racks around this location, try somewhere else", Toast.LENGTH_LONG).show();
     }
     /**
      * locating a geographical location from a location name of type String, and move the camera to that location

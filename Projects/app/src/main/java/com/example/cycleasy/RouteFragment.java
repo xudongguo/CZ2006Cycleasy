@@ -306,7 +306,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
 
 
     @Override
-
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
@@ -792,7 +791,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
                 Log.d(TAG, "onPostExecute: drawing line now");
                 polylineOptions.addAll(points);
                 polylineOptions.width(15);
-                polylineOptions.color(Color.BLUE);
+                polylineOptions.color(thiscontext.getResources().getColor(R.color.colorPrimary));
                 polylineOptions.geodesic(true);
             }
             if (polylineOptions != null) {

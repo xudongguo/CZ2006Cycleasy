@@ -119,7 +119,7 @@ public class ExerciseFragment extends Fragment implements OnMapReadyCallback{
         startBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO for tracker when start button is clicked\
+
                 if (!running){
                     mychrono.setBase(SystemClock.elapsedRealtime()-pauseoffset);
                     mychrono.start();
@@ -133,12 +133,16 @@ public class ExerciseFragment extends Fragment implements OnMapReadyCallback{
 
         }}
         );
-
+        stopBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(thiscontext,"hold to end exercise",Toast.LENGTH_LONG).show();
+            }
+        });
         //stop exercise button activity
         stopBut.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                //TODO for tracker when stop button is long clicked
                 //send cycling metrics to exercise report fragment for display
                 Bundle bundle=new Bundle();
                 bundle.putString("cycling distance", String.format("%.2fKM",cycdist));
@@ -203,25 +207,7 @@ public class ExerciseFragment extends Fragment implements OnMapReadyCallback{
 
         }
 
-    public boolean isServicesOK() {
-        Log.d(TAG, "isServiceOK: checking google services version");
 
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getContext());
-
-        if (available == ConnectionResult.SUCCESS) {
-            //fine
-            Log.d(TAG, "isServicesOK:");
-            return true;
-        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
-            //
-            Log.d(TAG, "isServicesOK: ");
-            //Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(getContext(), available, ERROR_DIALOG_REQUEST);
-            //dialog.show();
-        } else {
-            Toast.makeText(getContext(), "You can't make map requests", Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }
 
     @Override
 
@@ -319,119 +305,9 @@ public class ExerciseFragment extends Fragment implements OnMapReadyCallback{
 
             //Fx: find a location.
 
-            //Fx: find bicycling directions between 2 points
-            mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-                @Override
-                public void onMapLongClick(LatLng latLng) {
-                    //Reset marker when already 2
-                    if (listPoints.size() == 2) {
-                        listPoints.clear();
-                        mMap.clear();
-                    }
-                    //Save first point selected
-                    listPoints.add(latLng);
-                    //Create marker
-                    MarkerOptions markerOptions = new MarkerOptions();
-                    markerOptions.position(latLng);
 
-                    if (listPoints.size() == 1) {
-                        //Add first marker to the map
-                        Log.d(TAG, "onMapLongClick: adding first point");
-                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                    } else {
-                        //Add second market to the map
-                        Log.d(TAG, "onMapLongClick: adding second point");
-                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                    }
-                    mMap.addMarker(markerOptions);
-                    //request get direction code bellow
-                    if (listPoints.size() == 2) {
-                        Log.d(TAG, "onMapLongClick: Searching now");
-                        String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
-                        ExerciseFragment.TaskRequestDirections taskRequestDirections = new ExerciseFragment.TaskRequestDirections();
-                        taskRequestDirections.execute(url);
-                    }
-                }
-            });
         }
     }
-
-
-    // get request about starting and ending points and convert to url, and use url to request from google map api
-    private String getRequestUrl(LatLng origin,LatLng dest){
-        // value of origin
-        String str_org = "origin="+origin.latitude+","+origin.longitude;
-        // value of destination
-        String str_dest = "destination="+dest.latitude+","+dest.longitude;
-        // set value anble the sensor
-        //String sensor = "sensor=false";
-        // Mode for finding direction
-        String mode = "mode=bicycling";
-        // Build the full param
-        String api_key = "&key=AIzaSyDW_vO8Zofe8at0AwHE-91_Pa1ZQFTijr8";
-
-        String param = str_org +"&"+str_dest+"&"+mode+api_key;
-        // Output format
-        String output = "json";
-        // Create url to request
-        String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+param;
-        Log.d(TAG, "getRequestUrl: "+url);
-        return url;
-    }
-
-//    private void init(String query){
-//        Log.d(TAG, "init: initializing");
-//
-//        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent keyEvent) {
-//                if(actionId == EditorInfo.IME_ACTION_SEARCH
-//                        ||actionId == EditorInfo.IME_ACTION_DONE
-//                        ||keyEvent.getAction() == KeyEvent.ACTION_DOWN
-//                        ||keyEvent.getAction() == KeyEvent.KEYCODE_ENTER){
-//
-//                    //execute our method for searching
-//                    geoLocate(query);
-//                    hideSoftKeyboard();
-//                }
-//                return false;
-//            }
-//        });
-//    }
-
-
-    /**
-     * locating a geographical location from a location name of type String, and move the camera to that location
-     * @param query query text containing the name of the location
-     * @return Address of the location
-     */
-    private Address geoLocate(String query){
-        Log.d(TAG, "geoLocate: geolocating");
-
-        Geocoder geocoder = new Geocoder(getContext());
-        List<Address> list = new ArrayList<>();
-        try{
-            list = geocoder.getFromLocationName(query,1);
-        }catch(IOException e){
-            Log.e(TAG,"geolocate: IOException"+e.getMessage());
-        }
-
-        if(list.size()>0){
-
-            Log.d(TAG, "geoLocate: found something");
-            Address address = list.get(0);
-
-            Log.d(TAG, "geoLocate: found a location: "+address.toString());
-            //Toast.makeText(this,address.toString(),Toast.LENGTH_SHORT).show();
-
-            moveCamera(new LatLng(address.getLatitude(),address.getLongitude()),DEFAULT_ZOOM,address.getAddressLine(0));
-
-            return address;
-        }
-        return null;
-    }
-
-
 
     /**
      * move camera towards a point with latitude and longtitude parsed in LatLng, and camera zoom of zoom and location name title
@@ -490,113 +366,4 @@ public class ExerciseFragment extends Fragment implements OnMapReadyCallback{
         }
     }
 
-    // get direction, using httpurlconnection
-    private String requestDirection(String reqUrl) throws IOException {
-        String responseString = "";
-        InputStream inputStream = null;
-        HttpURLConnection httpURLConnection = null;
-        try{
-            URL url = new URL(reqUrl);
-            httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.connect();
-
-            //Get the response result
-            inputStream = httpURLConnection.getInputStream();
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-            StringBuffer stringBuffer = new StringBuffer();
-            String line = "";
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuffer.append(line);
-            }
-
-            responseString = stringBuffer.toString();
-            bufferedReader.close();
-            inputStreamReader.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-            httpURLConnection.disconnect();
-        }
-        return responseString;
-    }
-    // create a AsyncTask to call request direction
-    public class TaskRequestDirections extends AsyncTask<String,Void,String> {
-        @Override
-        protected String doInBackground(String... strings){
-            String responseString = "";
-            try {
-                responseString = requestDirection(strings[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return responseString;
-        }
-
-        @Override
-        protected void onPostExecute(String s){
-            super.onPostExecute(s);
-            //Parse json here
-            Log.d(TAG, "onPostExecute: calling taskparser");
-            ExerciseFragment.TaskParser taskParser = new ExerciseFragment.TaskParser();
-            taskParser.execute(s);
-
-        }
-    }
-
-    public class TaskParser extends AsyncTask<String,Void,List<List<HashMap<String,String>>>> {
-
-        @Override
-        protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
-            Log.d(TAG, "doInBackground: calling json");
-            JSONObject jsonObject = null;
-            List<List<HashMap<String, String>>> routes = null;
-            try {
-                jsonObject = new JSONObject(strings[0]);
-                DirectionParser directionParser = new DirectionParser();
-                routes = directionParser.parse(jsonObject);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return routes;
-        }
-
-        @Override
-        protected void onPostExecute(List<List<HashMap<String, String>>> lists) {
-            //super.onPostExecute(lists);
-            // Get list route and display it into the map
-            ArrayList points = null;
-
-            PolylineOptions polylineOptions = null;
-
-            for (List<HashMap<String, String>> path : lists) {
-                points = new ArrayList();
-                polylineOptions = new PolylineOptions();
-
-                for (HashMap<String, String> point : path) {
-                    double lat = Double.parseDouble(point.get("lat"));
-                    double lon = Double.parseDouble(point.get("lon"));
-                    Log.d(TAG, "onPostExecute: " + lat + " " + lon);
-                    points.add(new LatLng(lat, lon));
-                }
-
-                Log.d(TAG, "onPostExecute: drawing line now");
-                polylineOptions.addAll(points);
-                polylineOptions.width(15);
-                polylineOptions.color(Color.BLUE);
-                polylineOptions.geodesic(true);
-            }
-            if (polylineOptions != null) {
-                mMap.addPolyline(polylineOptions);
-            } else {
-                Log.d(TAG, "onPostExecute: Direction not found!");
-                Toast.makeText(getContext(), "Direction not found", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 }
