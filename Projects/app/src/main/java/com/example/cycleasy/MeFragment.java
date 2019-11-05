@@ -26,6 +26,7 @@ public class MeFragment extends Fragment{
     private Fragment fragment;
     private static boolean hasmessage=false;
     private static String username;
+    private FirebaseAuth firebaseAuth;
 
     @Nullable
     @Override
@@ -34,7 +35,16 @@ public class MeFragment extends Fragment{
         Button cychisButton =view.findViewById(R.id.cychistorybtn);
         Button profileButton = view.findViewById(R.id.editprofilebtn);
         Button favpathButton =view.findViewById(R.id.favpathbtn);
-        TextView usernamefield=view.findViewById(R.id.Me_username);
+
+        TextView usernameText = view.findViewById(R.id.Me_username);
+        String s;
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser().getDisplayName() == null) {
+            s = "Hi Guest!";
+        } else {
+            s = "Hi " + firebaseAuth.getCurrentUser().getDisplayName() + "!";
+        }
+        usernameText.setText(s);
 
         cychisButton.setOnClickListener(new View.OnClickListener() {
             @Override
