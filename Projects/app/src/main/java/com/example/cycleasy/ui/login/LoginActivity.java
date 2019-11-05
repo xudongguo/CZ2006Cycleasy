@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         activityLoginBinding.setViewModel(loginViewModel);
         activityLoginBinding.setLifecycleOwner(this);
 
+
         activityLoginBinding.guestLoginBtn.setOnClickListener(new View.OnClickListener () {
             @Override
             public void onClick(View view) {
