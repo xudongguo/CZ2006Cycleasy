@@ -6,24 +6,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.LocalSocketAddress;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.TabHost;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,8 +27,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.cycleasy.Search.SearchableActivity;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -61,6 +54,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
@@ -86,9 +81,11 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
     private static final int ERROR_DIALOG_REQUEST = 9001;
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     private static final float DEFAULT_ZOOM = 15f;
+    private static int favpathcnt=0;
     private static Context thiscontext;
     private String startpt, endpt;
     private Address startadd, endadd;
+    private static boolean hasRoute=false;
 
     @Nullable
     @Override
@@ -100,7 +97,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         mMapView = (MapView) view.findViewById(R.id.route_mapview);
         getLocationPermission();
         //check if location is enabled
-        LocationManager lm = (LocationManager)thiscontext.getSystemService(Context.LOCATION_SERVICE);
+        LocationManager lm = (LocationManager) thiscontext.getSystemService(Context.LOCATION_SERVICE);
         gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
         if (!gps_enabled) {
             //prompt user to enable gps in settings
@@ -116,6 +113,8 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
             if (!startpt.isEmpty() && !endpt.isEmpty()) {
                 topsearchbar.setText(startpt);
                 botsearchbar.setText(endpt);
+                startadd=geoLocate(startpt,false);
+                endadd=geoLocate(endpt,false);
                 messagepending = false;
 
             }
@@ -148,16 +147,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        //share button activity
-        final FloatingActionButton shareBut = (FloatingActionButton) view.findViewById(R.id.route_shareBut);
-        shareBut.hide();
-        shareBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            //TODO when share button is clicked
-            public void onClick(View view) {
 
-            }
-        });
 
         //favorite button activity
         final FloatingActionButton favBut = (FloatingActionButton) view.findViewById(R.id.route_favBut);
@@ -166,24 +156,32 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
             boolean favButflag = true;
 
             @Override
-
-            //TODO when favorite button is clicked or unclicked
             public void onClick(View view) {
-
-
-                if (favButflag) {
+                if (favButflag && hasRoute) {
 
                     favBut.setImageDrawable(getResources().getDrawable(R.drawable.icon_favfilled));
+                    XmlWriter mywriter=new XmlWriter();
+                    try {
+                        mywriter.writeXML(favpathcnt, startpt,endpt);
+                    } catch (ParserConfigurationException e) {
+                        e.printStackTrace();
+                    }
+
+                    favpathcnt++;
                     favButflag = false;
                     Toast myToast = Toast.makeText(getContext(), "Added to favorite", Toast.LENGTH_LONG);
                     myToast.show();
 
-                } else if (!favButflag) {
+                } else if (!favButflag && hasRoute) {
 
                     favBut.setImageDrawable(getResources().getDrawable(R.drawable.icon_favempty));
                     favButflag = true;
                     Toast myToast = Toast.makeText(getContext(), "Removed from favorite", Toast.LENGTH_LONG);
                     myToast.show();
+                }
+
+                else {
+                    Toast.makeText(thiscontext, "you have not selected a route to be added", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -196,7 +194,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
             public void onClick(View view) {
 
                 favBut.show();
-                shareBut.show();
                 //TODO for when "FIND" BUTTON IS CLICKED
                 if (listPoints.size() == 2) {
                     listPoints.clear();
@@ -273,7 +270,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
                 TextView topsearchbar = (TextView) getView().findViewById(R.id.route_topsearchhbar);
                 topsearchbar.setText(displaytxt);
                 startpt = displaytxt;
-                startadd = geoLocate(displaytxt);
+                startadd = geoLocate(displaytxt,true);
             } else if (resultCode == RESULT_CANCELED) {
                 //if activity closed abnormally
             }
@@ -286,7 +283,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
                 TextView botsearchbar = (TextView) getView().findViewById(R.id.route_botsearchbar);
                 botsearchbar.setText(displaytxt);
                 endpt = displaytxt;
-                endadd = geoLocate(displaytxt);
+                endadd = geoLocate(displaytxt, true);
 
             } else if (resultCode == RESULT_CANCELED) {
                 //if activity closed abnormally
@@ -449,32 +446,13 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         return url;
     }
 
-//    private void init(String query){
-//        Log.d(TAG, "init: initializing");
-//
-//        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent keyEvent) {
-//                if(actionId == EditorInfo.IME_ACTION_SEARCH
-//                        ||actionId == EditorInfo.IME_ACTION_DONE
-//                        ||keyEvent.getAction() == KeyEvent.ACTION_DOWN
-//                        ||keyEvent.getAction() == KeyEvent.KEYCODE_ENTER){
-//
-//                    //execute our method for searching
-//                    geoLocate(query);
-//                    hideSoftKeyboard();
-//                }
-//                return false;
-//            }
-//        });
-//    }
 
     /**
      * locating a geographical location from a location name of type String, and move the camera to that location
      * @param query query text containing the name of the location
      * @return Address of the location
      */
-    private Address geoLocate(String query) {
+    private Address geoLocate(String query, boolean moveCamera) {
         Log.d(TAG, "geoLocate: geolocating");
 
         Geocoder geocoder = new Geocoder(getContext());
@@ -492,7 +470,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
 
             Log.d(TAG, "geoLocate: found a location: " + address.toString());
             //Toast.makeText(this,address.toString(),Toast.LENGTH_SHORT).show();
-
+            if(moveCamera)
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0));
 
             return address;
@@ -795,10 +773,14 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
                 polylineOptions.geodesic(true);
             }
             if (polylineOptions != null) {
+                hasRoute=true;
                mMap.addPolyline(polylineOptions);
+
             }
-            else
+            else{
                 Toast.makeText(thiscontext, "no route available", Toast.LENGTH_SHORT).show();
+                hasRoute=false;
+            }
         }
     }
 

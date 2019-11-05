@@ -7,6 +7,7 @@ public class LoggedInUser {
 
     private String userId, displayName, email;
 
+
     public LoggedInUser(String userId, String displayName) {
         this.userId = userId;
         this.displayName = displayName;

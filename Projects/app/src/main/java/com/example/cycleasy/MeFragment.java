@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,12 +16,16 @@ import androidx.fragment.app.Fragment;
 import com.example.cycleasy.ui.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.w3c.dom.Text;
+
 /**
  * Fragment class for activities in me page
  */
 public class MeFragment extends Fragment{
 
     private Fragment fragment;
+    private static boolean hasmessage=false;
+    private static String username;
 
     @Nullable
     @Override
@@ -28,6 +34,7 @@ public class MeFragment extends Fragment{
         Button cychisButton =view.findViewById(R.id.cychistorybtn);
         Button profileButton = view.findViewById(R.id.editprofilebtn);
         Button favpathButton =view.findViewById(R.id.favpathbtn);
+        TextView usernamefield=view.findViewById(R.id.Me_username);
 
         cychisButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +54,9 @@ public class MeFragment extends Fragment{
                 loadfragment(new subFragment_favpath());
             }
         });
+
+        //TODO set username if is has been changed
+
         return view;
     }
 
@@ -67,5 +77,8 @@ public class MeFragment extends Fragment{
         return false;
     }
 
+    public void setMessageStatus(boolean status){
+        hasmessage=status;
+    }
 }
 
