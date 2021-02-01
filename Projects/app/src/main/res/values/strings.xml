@@ -1,4 +1,27 @@
 <resources>
+    <!--Project setup Strings-->
+    <string name="google_web_client_id">804417926066-bd1qrf9muek353dvdeb0ppjtaqv3jc9q.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">385355792132912</string>
+    <string name="fb_login_protocol_scheme">fb385355792132912</string>
+
+    <!--Login and Signup strings-->
+    <string name="title_activity_login">Log in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_confirm_password">Reenter password</string>
+    <string name="action_sign_in">Login</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >8 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="link_signup">No account yet? Sign up</string>
+    <string name="action_sign_up">Sign up</string>
+    <string name="or">OR</string>
+    <string name="prompt_password_confirm">Confirm Password</string>
+    <string name="sign_in_with_google">Continue with Google</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
+
+    <!-- Others -->
     <string name="app_name">Cycleasy</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
@@ -17,4 +40,46 @@
     <string name="your_profile">Your profile</string>
     <string name="your_cycling_history">Your cycling history</string>
     <string name="launchscreen">launchscreen</string>
+    <string name="google_maps_API_key">AIzaSyDW_vO8Zofe8at0AwHE-91_Pa1ZQFTijr8</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile_fragment">Profile fragment</string>
+    <string name="title_activity_profile">profileActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="startexercise">startexercise</string>
+    <string name="stopexercise">stopexercise</string>
+    <string name="textview">TextView</string>
+    <string name="distance">Distance:</string>
+    <string name="duration">Duration:</string>
+    <string name="speed">Speed:</string>
+    <string name="average_speed">Average Speed</string>
+    <string name="profilepicture">profilepicture</string>
+    <string name="hi_username">Hi! Username</string>
+    <string name="toparrow">toparrow</string>
+    <string name="mylocation">mylocation</string>
+    <string name="defaultdistance">0.00KM</string>
+    <string name="_00_30_22">00:30:22</string>
+    <string name="defaultspeed">0.00KM/H</string>
+    <string name="searchtitle">searchtitle</string>
+    <string name="find_rack_button">find rack Button</string>
+    <string name="find">FIND</string>
+    <string name="searchicon">searchicon</string>
+    <string name="where_to_park">where to park</string>
+    <string name="hinttext">hinttext</string>
+    <string name="searchhint">undefined</string>
+    <string name="racks_searchhint">Where to park?</string>
+    <string name="topsearchhint">Choose starting point</string>
+    <string name="botsearchhint">Choose destination</string>
+    <string name="racklocation">racklocation</string>
+    <string name="exe_reptitle">YOUR EXERCISE REPORT</string>
+    <string name="exe_disttext">Distance Cycled</string>
+    <string name="exe_durationcycled">Duration Cycled</string>
+    <string name="exe_avespeed">Average Speed</string>
+    <string name="exe_notification"> Your exercise is saved in <u>cycling history</u>.</string>
+    <string name="gobackbuttondescription">gobackbutton</string>
+
+
+
 </resources>

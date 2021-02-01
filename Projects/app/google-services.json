@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "804417926066",
+    "firebase_url": "https://cz2006-software-eng.firebaseio.com",
+    "project_id": "cz2006-software-eng",
+    "storage_bucket": "cz2006-software-eng.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804417926066:android:3784954a1640a5d849aaab",
+        "android_client_info": {
+          "package_name": "com.example.cycleasy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804417926066-tbnpct090aemnj9n8kb1lu4q78ssi46s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cycleasy",
+            "certificate_hash": "a23c5c2fd5d50c040cf9e4bdafbc81fca0d984e9"
+          }
+        },
+        {
+          "client_id": "804417926066-dohji7h4vrrakbp2tgd74ir65gs3q7sp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cycleasy",
+            "certificate_hash": "ecd962ee6da9dc0fe8425d08a75276e08d6b5bb8"
+          }
+        },
+        {
+          "client_id": "804417926066-bd1qrf9muek353dvdeb0ppjtaqv3jc9q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoAktWfUgsV1OBWESHFQdeKBW0Mr8lYuU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804417926066-6qma4dcmn0bi07iv79dlirjf90pql22t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

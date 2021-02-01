@@ -28,8 +28,6 @@
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
         app:itemBackground="@color/colorPrimaryDark"
         app:itemIconTint="@color/colorAccent"
         app:itemTextColor="@color/colorPrimary"
@@ -38,3 +36,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
